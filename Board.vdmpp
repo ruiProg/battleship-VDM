@@ -85,6 +85,20 @@ operations
 	public getShips : () ==> set of CellContent
 		getShips() == return dom shipSize;
 		
+	public getShipsCount : () ==> int
+		getShipsCount() == return card dom shipSize;
+		
+	public registerMove: char * nat1 ==> CellContent
+		registerMove(colCh, line) == (
+			dcl col: nat1 := colMap(colCh);
+			dcl oldValue: CellContent := cells(line)(col);
+			if oldValue = <Empty> then cells(line)(col) := <Miss>
+			else cells(line)(col) := <Hit>;
+			return oldValue;
+		)
+		pre cells(line)(colMap(colCh)) not in set {<Hit>,<Miss>}
+		post cells(line)(colMap(colCh)) in set {<Hit>,<Miss>};
+		
 		--- print to console
 		
 	public shipToString : CellContent ==> Player`String

@@ -1,10 +1,14 @@
 class Game
+types
+	private State = <Off> | <Start> | <Placed> | <Round>
+
 instance variables
 	private inGame: bool := false;
 	private playerA: Player;
 	private playerB: Player;
 	private currPlayer: Player;
 	private players: set of Player := {};
+	private currState: State := <Off>;
 	
 	inv currPlayer in set {playerA, playerB};
 	inv playerA in set players;
@@ -21,7 +25,7 @@ operations
 			players := {playerA, playerB};
 			return self
 		)
-		pre not inGame and name1 <> name2 and card players = 0
+		pre currState= <Off> and name1 <> name2 and card players = 0
 		post card players = 2;
 			
 	public createPlayer: (Player`String) ==> Player
@@ -40,12 +44,19 @@ operations
 			currPlayer := tmpPlayer;
 			);
 		)
-		pre exists p1, p2 in set players & p1.getName() = name1 and p2.getName() = name2;
+		pre currState = <Off> and exists p1, p2 in set players & p1.getName() = name1 and p2.getName() = name2;
 			
 	public switchTurns: () ==> ()
 		switchTurns() == (
-			if (currPlayer = playerA) then currPlayer := playerB
+			if currPlayer = playerA then currPlayer := playerB
 			else currPlayer := playerA
+		)
+		pre currState <> <Off>;
+		
+	public getOtherPlayer: () ==> Player
+		getOtherPlayer() == (
+			if currPlayer = playerA then return playerA
+			else return playerB;
 		);
 			
 	public startGame: () ==> Player`String
@@ -53,28 +64,50 @@ operations
 			inGame := true;
 			playerA.addBoards();
 			playerB.addBoards();
+			currState := <Start>;
 			return "Game started with following players:\n"
 			^ playerA.printInfo()
 			^ playerB.printInfo() ^ "\n\n\n\n"
 			^ currPlayer.printPlacementStatus();	
 		)
-		pre not inGame;
+		pre currState = <Off>;
 		
 	public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> Player`String
 		shipPlacement(ship, colCh, line, dir) == (
-			if not currPlayer.allShipsPlaced() then (
-				dcl ret: Player`String;
-				currPlayer.shipPlacement(ship, colCh, line, dir);
-				ret := currPlayer.printPlacementStatus();
-				if currPlayer.allShipsPlaced() then(
-					switchTurns();
-					ret := ret ^ "\n\n\n\n\n";
-					if currPlayer.allShipsPlaced() then ret := ret ^ "All ships placed\n"
-					else ret := ret ^ currPlayer.printPlacementStatus();
-				);
-				return ret;
+			dcl ret: Player`String;
+			currPlayer.shipPlacement(ship, colCh, line, dir);
+			ret := currPlayer.printPlacementStatus();
+			if currPlayer.allShipsPlaced() then(
+				switchTurns();
+				ret := ret ^ "\n\n\n\n\n";
+				if currPlayer.allShipsPlaced() then (
+					currState := <Placed>;
+					ret := ret ^ "All ships placed\n";
+				)
+			else ret := ret ^ currPlayer.printPlacementStatus();
 			);
-			return "All ships placed\n";
-		);
+			return ret;
+		)
+		pre currState = <Start>;
+		
+	public startRounds: () ==> Player`String
+		startRounds() == (
+			playerA.startRounds();
+			playerB.startRounds();
+			currState := <Round>;
+			return currPlayer.printGameStatus();
+		)
+		pre currState = <Placed>;
+		
+	public guessShipPosition: char * nat1 ==> Player`String
+		guessShipPosition(colCh, line) == (
+			dcl othPlayer: Player := getOtherPlayer();
+			dcl code: Board`CellContent := othPlayer.registerAttack(colCh, line);
+			return "Temporary";
+			--currPlayer.registerResult(code);
+			--if code = <Empty> then switchTurns()
+			--else if code not in set {<Hit>, <Miss>} then othPlayer.printTakeDown(code);
+		)
+		pre currState = <Round>;
 				
 end Game

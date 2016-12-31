@@ -8,7 +8,8 @@ instance variables
 	private losses: nat;
 	private ownBoard: [Board] := nil;
 	private enemyBoard: [Board] := nil;
-	private shipsToPlace: set of Board`CellContent := {};
+	private myShips: set of Board`CellContent := {}; -- ships placed and my ships during game (decrease)
+	private enemiesShips: set of Board`CellContent := {}; -- enemies ships destroyed (increase)
 	
 	inv len name < 256;
 	
@@ -28,19 +29,39 @@ operations
 		addBoards() == (
 			ownBoard := new Board();
 			enemyBoard := new Board();
-			shipsToPlace := ownBoard.getShips();
+			myShips := ownBoard.getShips();
 		)
 		pre ownBoard = nil and enemyBoard = nil;
 		
 	public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> ()
 		shipPlacement(ship, colCh, line, dir) == (
 			ownBoard.placeShip(ship, colCh, line, dir);
-			shipsToPlace := shipsToPlace \ {ship}
+			myShips := myShips \ {ship}
 		)
-		pre ship in set shipsToPlace;
+		pre ship in set myShips;
 	
 	public allShipsPlaced: () ==> bool
-		allShipsPlaced() == return card shipsToPlace = 0;
+		allShipsPlaced() == return card myShips = 0;
+	
+	public startRounds: () ==> ()
+		startRounds () == (
+			myShips := ownBoard.getShips();
+			enemiesShips := {};
+		);
+	
+	public registerAttack: char * nat1 ==> Board`CellContent
+		registerAttack(colCh, line) == (
+			dcl shipHit : Board`CellContent := ownBoard.registerMove(colCh, line);
+			if ownBoard.countCellType(shipHit) = 0 then (
+				myShips := myShips \ {shipHit};
+				return shipHit;
+			)
+			else if shipHit <> <Empty> then return <Hit>
+			else return <Miss>;
+		);
+	
+	public registerResult: Board`CellContent ==> ()
+		registerResult(shipDown) == return;
 	
 --- print to console
 	
@@ -49,9 +70,15 @@ operations
 			VDMUtil`val2seq_of_char[nat](wins) ^ "-" ^ 
 			VDMUtil`val2seq_of_char[nat](losses) ^ ")\n";
 	
-	public printPlacementStatus: () ==> Player`String
+	public printPlacementStatus: () ==> String
 		printPlacementStatus() == return "Player turn: " ^ name ^ "\n" ^
-		"Ships to be placed: " ^ ownBoard.printRemainShips(shipsToPlace) ^ "\n\n" ^
+		"Ships to be placed: " ^ ownBoard.printRemainShips(myShips) ^ "\n\n" ^
 		ownBoard.printBoard();
+		
+	public printGameStatus : () ==> String
+		printGameStatus() == return "Temporary message";
+			
+	public printTakeDown : Board`CellContent ==> String
+		printTakeDown(shipDown) == return "Temporary message";
 
 end Player
