@@ -148,7 +148,7 @@ operations
 				
 				pBoard := pBoard ^ "\n";
 			);
-			return "      A      B      C      D      E      F      G      H      I      J    " ^
+			return "      A      B      C      D      E      F      G      H      I      J    \n\n" ^
 			"\t\t\t" ^ "      A      B      C      D      E      F      G      H      I      J    \n\n" ^ pBoard);
 			
 			

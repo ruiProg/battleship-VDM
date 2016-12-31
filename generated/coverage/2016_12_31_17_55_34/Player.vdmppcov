@@ -77,11 +77,10 @@ operations
 		
 	public printGameStatus : () ==> String
 		printGameStatus() == (
-			dcl ret: String := "Player turn: " ^ name ^ "\nMy active ships: ";
+			dcl ret: String := "Player turn " ^ name ^ "\nMy active ships: ";
 			for all ship in set myShips do ret := ret ^ ownBoard.shipToString(ship) ^ "   ";
 			ret := ret ^ "\nDestroyed enemies ships: ";
-			for all ship in set enemiesShips do ret := ret ^ enemyBoard.shipToString(ship) ^ "   ";
-			ret := ret ^ "\n\n                                 My ships \t\t\t\t\t\t\t\t\t                Enemy ships\n\n\n";
+			for all ship in set enemiesShips do ret := ret ^ enemyBoard.shipToString(ship) ^ "   \n\n";
 			ret := ret ^ ownBoard.printParallelBoards(enemyBoard);
 			return ret;
 		);
