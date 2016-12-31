@@ -1,0 +1,28 @@
+create g := new Game("Ana","Paula")
+print g.createPlayer("Henrique")
+print g.createPlayer("Fabio")
+print g.createPlayer("Ana")
+
+print g.changePlayers("Henrique","Fabio")
+print g.changePlayers("Ana","Henrique")
+print g.changePlayers("Paula","Paulo")
+
+create b := new Board();
+
+
+create g := new Game("Ana","Paula")
+print g.startGame()
+print g.shipPlacement(<Submarine>,'C',9,<Right>)
+print g.shipPlacement(<Carrier>, 'H', 9, <Up>)
+print g.shipPlacement(<Cruiser>, 'G',2,<Right>)
+print g.shipPlacement(<Battleship>,'A',2,<Down>)
+print g.shipPlacement(<Destroyer>,'C',4,<Down>)
+
+print g.shipPlacement(<Submarine>,'C',9,<Right>)
+print g.shipPlacement(<Carrier>, 'H', 9, <Up>)
+print g.shipPlacement(<Cruiser>, 'G',2,<Right>)
+print g.shipPlacement(<Battleship>,'A',2,<Down>)
+print g.shipPlacement(<Destroyer>,'C',4,<Down>)
+
+
+print g.startRounds()
