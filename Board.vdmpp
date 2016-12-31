@@ -23,11 +23,15 @@ operations
 		);
 		
 	public setComponent: CellContent * nat1 * nat1 ==> ()
-		setComponent(ship, line, col) == (
-			cells(line) := cells(line) ++ {col |-> ship}
+		setComponent(content, line, col) == (
+			cells(line) := cells(line) ++ {col |-> content}
 		)
 		pre col <= 10 and line <= 10;
-		
+	
+	public setComponentCol: CellContent * nat1 * char ==> ()
+		setComponentCol(content, line, colCh) == setComponent(content, line, colMap(colCh))
+		pre colCh in set dom colMap;
+	
 	pure public emptyValidCells: nat1 * nat1 * Direction * nat1 ==> bool
 		emptyValidCells(line, col, dir, size) == (
 			if dir = <Up> then
@@ -96,7 +100,7 @@ operations
 			else cells(line)(col) := <Hit>;
 			return oldValue;
 		)
-		pre cells(line)(colMap(colCh)) not in set {<Hit>,<Miss>}
+		pre colCh in set dom colMap and cells(line)(colMap(colCh)) not in set {<Hit>,<Miss>}
 		post cells(line)(colMap(colCh)) in set {<Hit>,<Miss>};
 		
 		--- print to console

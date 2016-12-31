@@ -103,10 +103,23 @@ operations
 		guessShipPosition(colCh, line) == (
 			dcl othPlayer: Player := getOtherPlayer();
 			dcl code: Board`CellContent := othPlayer.registerAttack(colCh, line);
-			return "Temporary";
-			--currPlayer.registerResult(code);
-			--if code = <Empty> then switchTurns()
-			--else if code not in set {<Hit>, <Miss>} then othPlayer.printTakeDown(code);
+			dcl ret: Player`String := [];
+			dcl final: bool := currPlayer.registerResult(code, colCh, line);
+			if code = <Miss> then (
+				ret := ret ^ "\n\nSplash!! You missed!\n";
+			 	switchTurns();
+			 )
+			else if code = <Hit> then ret := ret ^ "\n\nGreat strike\n"
+			else ret := ret ^ currPlayer.printTakeDown(code);
+			if final then(
+				ret := ret ^ currPlayer.printVictory();
+				currState := <Off>;
+				playerA.clearData();
+				playeeB.clearData();
+				return ret;
+			);
+			ret := ret ^ "\n\n\n\n\n" ^ currPlayer.printGameStatus();
+			return ret;
 		)
 		pre currState = <Round>;
 				

@@ -49,19 +49,39 @@ operations
 			enemiesShips := {};
 		);
 	
+	public clearData: () ==> ()
+		clearData() == (
+			ownBoard := nil;
+			enemyBoard := nil;
+			myShips := {};
+			enemiesShips := {};
+		);
+	
 	public registerAttack: char * nat1 ==> Board`CellContent
 		registerAttack(colCh, line) == (
 			dcl shipHit : Board`CellContent := ownBoard.registerMove(colCh, line);
 			if ownBoard.countCellType(shipHit) = 0 then (
 				myShips := myShips \ {shipHit};
+				if card myShips = 0 then losses := losses + 1;
 				return shipHit;
 			)
 			else if shipHit <> <Empty> then return <Hit>
 			else return <Miss>;
 		);
 	
-	public registerResult: Board`CellContent ==> ()
-		registerResult(shipDown) == return;
+	public registerResult: Board`CellContent * char * nat1 ==> bool
+		registerResult(code,colCh, line) == (
+		if code = <Miss> then enemyBoard.setComponentCol(<Miss>,line,colCh)
+		else(
+			enemyBoard.setComponentCol(<Hit>,line,colCh);
+		 	if code <> <Hit> then enemiesShips := enemiesShips union {code};
+		 	if card enemiesShips = enemyBoard.getShipsCount() then(
+		 		wins := wins + 1;
+		 		return true;
+		 	);
+		 );
+		 return false;
+	);
 	
 --- print to console
 	
@@ -88,5 +108,8 @@ operations
 			
 	public printTakeDown : Board`CellContent ==> String
 		printTakeDown(shipDown) == return "Temporary message";
+		
+	public printVictory : () ==> String
+		printVictory() == return "Temporary message";
 
 end Player
