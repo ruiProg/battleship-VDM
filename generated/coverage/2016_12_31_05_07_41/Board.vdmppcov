@@ -1,0 +1,15 @@
+class Board
+types
+	public CellContent = <Empty> | <Carrier> | <Battleship> | <Cruiser> | <Submarine> | <Destroyer> | <Hit> | <Miss>
+
+instance variables
+	private cells: seq of seq of CellContent := [];
+	
+	inv len cells = 10;
+	inv card {i| i in set inds cells & len cells(i) = 10} = 10;
+	
+operations
+	public Board: () ==> Board
+	Board() == cells := [[<Empty>| {1,...,10}]| a in set {1,...,10}]
+		
+end Board
