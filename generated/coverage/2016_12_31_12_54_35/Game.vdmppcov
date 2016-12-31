@@ -68,13 +68,11 @@ operations
 				ret := currPlayer.printPlacementStatus();
 				if currPlayer.allShipsPlaced() then(
 					switchTurns();
-					ret := ret ^ "\n\n\n\n\n";
-					if currPlayer.allShipsPlaced() then ret := ret ^ "All ships placed\n"
-					else ret := ret ^ currPlayer.printPlacementStatus();
+					ret := ret ^ "\n\n\n\n\n" ^ currPlayer.printPlacementStatus();
 				);
-				return ret;
-			);
-			return "All ships placed\n";
+				return ret
+			)
+			else return "All ships placed\n";
 		);
 				
 end Game

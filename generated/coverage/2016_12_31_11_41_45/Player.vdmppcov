@@ -8,7 +8,7 @@ instance variables
 	private losses: nat;
 	private ownBoard: [Board] := nil;
 	private enemyBoard: [Board] := nil;
-	private shipsToPlace: set of Board`CellContent := {};
+	private shipsToPlace: set of CellContent := {};
 	
 	inv len name < 256;
 	
@@ -28,30 +28,17 @@ operations
 		addBoards() == (
 			ownBoard := new Board();
 			enemyBoard := new Board();
-			shipsToPlace := ownBoard.getShips();
+			shipsToPlace := Board`getShips();
 		)
 		pre ownBoard = nil and enemyBoard = nil;
-		
-	public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> ()
-		shipPlacement(ship, colCh, line, dir) == (
-			ownBoard.placeShip(ship, colCh, line, dir);
-			shipsToPlace := shipsToPlace \ {ship}
-		)
-		pre ship in set shipsToPlace;
-	
-	public allShipsPlaced: () ==> bool
-		allShipsPlaced() == return card shipsToPlace = 0;
-	
---- print to console
-	
+
 	public printInfo : () ==> String
 		printInfo() == return name ^ " (" ^ 
 			VDMUtil`val2seq_of_char[nat](wins) ^ "-" ^ 
 			VDMUtil`val2seq_of_char[nat](losses) ^ ")\n";
-	
-	public printPlacementStatus: () ==> Player`String
-		printPlacementStatus() == return "Player turn: " ^ name ^ "\n" ^
-		"Ships to be placed: " ^ ownBoard.printRemainShips(shipsToPlace) ^ "\n\n" ^
-		ownBoard.printBoard();
+			
+	public shipPlacement: () ==> ()
+		shipPlacement() == (
+		);
 
 end Player

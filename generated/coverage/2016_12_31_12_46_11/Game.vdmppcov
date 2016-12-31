@@ -66,15 +66,10 @@ operations
 				dcl ret: Player`String;
 				currPlayer.shipPlacement(ship, colCh, line, dir);
 				ret := currPlayer.printPlacementStatus();
-				if currPlayer.allShipsPlaced() then(
-					switchTurns();
-					ret := ret ^ "\n\n\n\n\n";
-					if currPlayer.allShipsPlaced() then ret := ret ^ "All ships placed\n"
-					else ret := ret ^ currPlayer.printPlacementStatus();
-				);
-				return ret;
-			);
-			return "All ships placed\n";
+				if currPlayer.allShipsPlaced() then switchTurns();
+				return ret
+			)
+			else return "All ships placed\n";
 		);
 				
 end Game

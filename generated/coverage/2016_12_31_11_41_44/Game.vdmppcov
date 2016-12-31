@@ -21,7 +21,8 @@ operations
 			players := {playerA, playerB};
 			return self
 		)
-		pre not inGame and name1 <> name2 and card players = 0
+	
+	pre not inGame and name1 <> name2 and card players = 0
 		post card players = 2;
 			
 	public createPlayer: (Player`String) ==> Player
@@ -55,26 +56,19 @@ operations
 			playerB.addBoards();
 			return "Game started with following players:\n"
 			^ playerA.printInfo()
-			^ playerB.printInfo() ^ "\n\n\n\n"
-			^ currPlayer.printPlacementStatus();	
+			^ playerB.printInfo();
+			currPlayer.presentShipsPlaced();	
 		)
 		pre not inGame;
 		
-	public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> Player`String
+	public shipPlacement: CellContent * char * nat1 * Direction ==> Player`String
 		shipPlacement(ship, colCh, line, dir) == (
 			if not currPlayer.allShipsPlaced() then (
-				dcl ret: Player`String;
 				currPlayer.shipPlacement(ship, colCh, line, dir);
-				ret := currPlayer.printPlacementStatus();
-				if currPlayer.allShipsPlaced() then(
-					switchTurns();
-					ret := ret ^ "\n\n\n\n\n";
-					if currPlayer.allShipsPlaced() then ret := ret ^ "All ships placed\n"
-					else ret := ret ^ currPlayer.printPlacementStatus();
-				);
-				return ret;
-			);
-			return "All ships placed\n";
+				currPlayer.presentShipsPlaced();
+				if currPlayer.allShipsPlaced() then switchTurns();
+			)
+			else return "All ships placed\n";
 		);
 				
 end Game
