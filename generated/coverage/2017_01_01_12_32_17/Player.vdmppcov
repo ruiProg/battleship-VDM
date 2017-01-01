@@ -91,7 +91,7 @@ operations
 			VDMUtil`val2seq_of_char[nat](losses) ^ ")\n";
 	
 	public printPlacementStatus: () ==> String
-		printPlacementStatus() == return "Fleet placement\nPlayer turn: " ^ name ^ "\n" ^
+		printPlacementStatus() == return "Player turn: " ^ name ^ "\n" ^
 		"Ships to be placed: " ^ ownBoard.printRemainShips(myShips) ^ "\n\n" ^
 		ownBoard.printBoard();
 		
@@ -107,9 +107,9 @@ operations
 		);
 			
 	public printTakeDown : Board`CellContent ==> String
-		printTakeDown(shipDown) == return "\n\n" ^ enemyBoard.shipToString(shipDown) ^ " is sinking\n";
+		printTakeDown(shipDown) == return enemyBoard.shipToString(shipDown) ^ " is sinking\n";
 		
 	public printVictory : () ==> String
-		printVictory() == return "\nEnemy fleet destroyed. Victory!\n";
+		printVictory() == return "Enemy fleet destroyed. Victory!\n";
 
 end Player

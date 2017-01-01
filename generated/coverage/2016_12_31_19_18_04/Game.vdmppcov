@@ -55,8 +55,8 @@ operations
 		
 	public getOtherPlayer: () ==> Player
 		getOtherPlayer() == (
-			if currPlayer = playerA then return playerB
-			else return playerA;
+			if currPlayer = playerA then return playerA
+			else return playerB;
 		);
 			
 	public startGame: () ==> Player`String
@@ -115,7 +115,7 @@ operations
 				ret := ret ^ currPlayer.printVictory();
 				currState := <Off>;
 				playerA.clearData();
-				playerB.clearData();
+				playeeB.clearData();
 				return ret;
 			);
 			ret := ret ^ "\n\n\n\n\n" ^ currPlayer.printGameStatus();
