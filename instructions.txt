@@ -9,6 +9,7 @@ print g.changePlayers("Paula","Paulo")
 
 create b := new Board();
 
+//HOW TO PLAY
 
 create g := new Game("Ana","Paula")
 print g.startGame()
@@ -24,5 +25,6 @@ print g.shipPlacement(<Cruiser>, 'G',2,<Right>)
 print g.shipPlacement(<Battleship>,'A',2,<Down>)
 print g.shipPlacement(<Destroyer>,'C',4,<Down>)
 
-
 print g.startRounds()
+
+print g.guessShipPosition('H',1)
