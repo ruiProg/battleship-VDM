@@ -3,16 +3,14 @@ types
 	public CellContent = <Empty> | <Carrier> | <Battleship> | <Cruiser> | <Submarine> | <Destroyer> | <Hit> | <Miss>;
 	public Direction = <Up> | <Down> | <Left> | <Right>
 
-values
-	private static shipSize: map CellContent to nat1 = {
-		<Carrier> |-> 5, <Battleship> |-> 4, <Cruiser> |-> 3, <Submarine> |-> 3, <Destroyer> |-> 2
-	};
-	private static colMap: map char to nat1 = {
-		'A' |-> 1, 'B' |-> 2, 'C' |-> 3, 'D' |-> 4, 'E' |-> 5, 'F' |-> 6, 'G' |-> 7, 'H' |-> 8, 'I' |-> 9, 'J' |-> 10
-	}; -- índice de cada coluna
-
 instance variables
 	private cells: seq of seq of CellContent := []; --matriz de células
+	private static shipSize: map CellContent to nat1 := {
+		<Carrier> |-> 5, <Battleship> |-> 4, <Cruiser> |-> 3, <Submarine> |-> 3, <Destroyer> |-> 2
+	};
+	private static colMap: map char to nat1 := {
+		'A' |-> 1, 'B' |-> 2, 'C' |-> 3, 'D' |-> 4, 'E' |-> 5, 'F' |-> 6, 'G' |-> 7, 'H' |-> 8, 'I' |-> 9, 'J' |-> 10
+	}; -- índice de cada coluna
 	
 	inv len cells = 10; -- cada tabuleiro tem 10 linhas
 	inv card {i| i in set inds cells & len cells(i) = 10} = 10; -- cada linha tem 10 colunas

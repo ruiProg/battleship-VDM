@@ -1,0 +1,19 @@
+class TestBase
+
+operations
+	
+	static public assertTrue : bool ==> ()
+		assertTrue(cond) == return
+	pre cond;
+		
+	static public assertEqual : ? * ? ==> ()
+		assertEqual(result, expected) == return
+	post result = expected;
+		
+	static public runAllTests: () ==> ()
+		runAllTests() == (
+				dcl tb: TestBoard := new TestBoard();
+				tb.run();
+				
+				);
+end TestBase
