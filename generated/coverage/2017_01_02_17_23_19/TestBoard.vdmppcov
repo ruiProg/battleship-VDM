@@ -29,11 +29,6 @@ operations
 		TestBase`assertTrue(b.emptyValidCells(2,colMap('C'),<Right>,3));
 		TestBase`assertTrue(not b.emptyValidCells(7,colMap('F'),<Up>,3));
 		TestBase`assertTrue(not b.emptyValidCells(1,colMap('A'),<Left>,2));
-		
-		TestBase`assertEqual(b.countCellType(<Submarine>),0);
-		TestBase`assertEqual(shipSize(<Submarine>),3);
-		b.placeShip(<Submarine>,'C',2,<Right>);
-		TestBase`assertEqual(b.countCellType(<Submarine>),3);
 	);
 	
 	public run: () ==> ()

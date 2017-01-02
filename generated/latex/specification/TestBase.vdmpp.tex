@@ -1,0 +1,52 @@
+\begin{vdmpp}[breaklines=true]
+class TestBase
+
+operations
+(*@
+\label{AssertTrue:4}
+@*)
+ 
+(*@
+\label{assertTrue:5}
+@*)
+ static public assertTrue : bool ==> ()
+  assertTrue(cond) == return
+ pre cond;
+  
+(*@
+\label{assertEqual:9}
+@*)
+(*@
+\label{runAllTests:9}
+@*)
+ static public assertEqual : ? * ? ==> ()
+  assertEqual(result, expected) == return
+ post result = expected;
+  
+ static public runAllTests: () ==> ()
+  runAllTests() == (
+    dcl tb: TestBoard := new TestBoard();
+    tb.run();
+    
+    );
+end TestBase
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[AssertTrue:4]{AssertTrue} & 4&0.0\% & 0 \\
+\hline
+\hyperref[assertEqual:9]{assertEqual} & 9&100.0\% & 5 \\
+\hline
+\hyperref[assertTrue:5]{assertTrue} & 5&0.0\% & 0 \\
+\hline
+\hyperref[runAllTests:9]{runAllTests} & 9&100.0\% & 1 \\
+\hline
+\hline
+TestBase.vdmpp & & 80.0\% & 6 \\
+\hline
+\end{longtable}
+

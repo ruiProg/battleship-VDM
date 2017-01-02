@@ -1,0 +1,58 @@
+\begin{vdmpp}[breaklines=true]
+class TestBoard is subclass of Board
+operations
+ 
+(*@
+\label{testCreateBoard:4}
+@*)
+ -- todas as células estão vazias ao criar o tabuleiro
+ private testCreateBoard : () ==> ()
+  testCreateBoard() == (
+   dcl b: Board := new Board();
+   TestBase`assertEqual(b.countCellType(<Empty>),100);
+(*@
+\label{run:9}
+@*)
+ );
+ 
+(*@
+\label{testColMap:11}
+@*)
+ -- testa mapeamento entre colunas char e seu índice
+ private testColMap : () ==> ()
+  testColMap() == (
+   dcl b: Board := new Board();
+   dcl c: Board := new Board();
+   TestBase`assertEqual(2,colMap('B'));
+   TestBase`assertEqual(2-1,colMap('A'));
+   TestBase`assertEqual(2+1,colMap('C'));
+   
+   b.setComponent(<Cruiser>,1,2);
+   c.setComponentCol(<Cruiser>,1,'B');
+   TestBase`assertEqual(b.cells(1)(2),c.cells(1)(colMap('B')));
+ );
+ 
+ public run: () ==> ()
+  run() == (
+   testCreateBoard();
+   testColMap();
+ );
+end TestBoard
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[run:9]{run} & 9&100.0\% & 1 \\
+\hline
+\hyperref[testColMap:11]{testColMap} & 11&100.0\% & 1 \\
+\hline
+\hyperref[testCreateBoard:4]{testCreateBoard} & 4&100.0\% & 1 \\
+\hline
+\hline
+TestBoard.vdmpp & & 100.0\% & 3 \\
+\hline
+\end{longtable}
+

@@ -32,7 +32,7 @@ operations
 		
 		TestBase`assertEqual(b.countCellType(<Submarine>),0);
 		TestBase`assertEqual(shipSize(<Submarine>),3);
-		b.placeShip(<Submarine>,'C',2,<Right>);
+		b.shipPlacement(<Submarine>,'C',2,<Right>);
 		TestBase`assertEqual(b.countCellType(<Submarine>),3);
 	);
 	

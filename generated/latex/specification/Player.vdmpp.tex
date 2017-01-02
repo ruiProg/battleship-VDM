@@ -1,0 +1,198 @@
+\begin{vdmpp}[breaklines=true]
+class Player
+types
+ public String = seq of char;
+
+instance variables
+ private name: String;
+ private wins: nat;
+ private losses: nat;
+ private ownBoard: [Board] := nil;
+ private enemyBoard: [Board] := nil;
+ private myShips: set of Board`CellContent := {}; -- ships placed and my ships during game (decrease)
+ private enemiesShips: set of Board`CellContent := {}; -- enemies ships destroyed (increase)
+ 
+ inv len name < 256;
+ 
+operations
+(*@
+\label{Player:17}
+@*)
+ public Player: String ==> Player
+  Player(nameArg) == (
+   name := nameArg;
+   wins := 0;
+   losses := 0;
+   return self
+  );
+   
+(*@
+\label{getName:25}
+@*)
+ pure public getName : () ==> String
+  getName() == return name;
+   
+(*@
+\label{addBoards:28}
+@*)
+ public addBoards : () ==> ()
+  addBoards() == (
+   ownBoard := new Board();
+   enemyBoard := new Board();
+   myShips := ownBoard.getShips();
+  )
+  pre ownBoard = nil and enemyBoard = nil;
+  
+(*@
+\label{shipPlacement:36}
+@*)
+ public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> ()
+  shipPlacement(ship, colCh, line, dir) == (
+   ownBoard.placeShip(ship, colCh, line, dir);
+   myShips := myShips \ {ship}
+  )
+  pre ship in set myShips;
+ 
+(*@
+\label{allShipsPlaced:43}
+@*)
+ public allShipsPlaced: () ==> bool
+  allShipsPlaced() == return card myShips = 0;
+ 
+(*@
+\label{startRounds:46}
+@*)
+ public startRounds: () ==> ()
+  startRounds () == (
+   myShips := ownBoard.getShips();
+   enemiesShips := {};
+  );
+ 
+(*@
+\label{clearData:52}
+@*)
+ public clearData: () ==> ()
+  clearData() == (
+   ownBoard := nil;
+   enemyBoard := nil;
+   myShips := {};
+   enemiesShips := {};
+  );
+ 
+(*@
+\label{registerAttack:60}
+@*)
+ public registerAttack: char * nat1 ==> Board`CellContent
+  registerAttack(colCh, line) == (
+   dcl shipHit : Board`CellContent := ownBoard.registerMove(colCh, line);
+   if ownBoard.countCellType(shipHit) = 0 then (
+    myShips := myShips \ {shipHit};
+    if card myShips = 0 then losses := losses + 1;
+    return shipHit;
+   )
+   else if shipHit <> <Empty> then return <Hit>
+   else return <Miss>;
+  );
+ 
+(*@
+\label{registerResult:72}
+@*)
+ public registerResult: Board`CellContent * char * nat1 ==> bool
+  registerResult(code,colCh, line) == (
+  if code = <Miss> then enemyBoard.setComponentCol(<Miss>,line,colCh)
+  else(
+   enemyBoard.setComponentCol(<Hit>,line,colCh);
+    if code <> <Hit> then enemiesShips := enemiesShips union {code};
+    if card enemiesShips = enemyBoard.getShipsCount() then(
+     wins := wins + 1;
+     return true;
+    );
+   );
+   return false;
+ );
+ 
+--- print to console
+ 
+(*@
+\label{printInfo:88}
+@*)
+ public printInfo : () ==> String
+  printInfo() == return name ^ " (" ^ 
+   VDMUtil`val2seq_of_char[nat](wins) ^ "-" ^ 
+   VDMUtil`val2seq_of_char[nat](losses) ^ ")\n";
+ 
+(*@
+\label{printPlacementStatus:93}
+@*)
+ public printPlacementStatus: () ==> String
+  printPlacementStatus() == return "Fleet placement\nPlayer turn: " ^ name ^ "\n" ^
+  "Ships to be placed: " ^ ownBoard.printRemainShips(myShips) ^ "\n\n" ^
+  ownBoard.printBoard();
+  
+(*@
+\label{printGameStatus:98}
+@*)
+ public printGameStatus : () ==> String
+  printGameStatus() == (
+   dcl ret: String := "Player turn: " ^ name ^ "\nMy active ships: ";
+   for all ship in set myShips do ret := ret ^ ownBoard.shipToString(ship) ^ "   ";
+   ret := ret ^ "\nDestroyed enemies ships: ";
+   for all ship in set enemiesShips do ret := ret ^ enemyBoard.shipToString(ship) ^ "   ";
+   ret := ret ^ "\n\n                                 My ships \t\t\t\t\t\t\t\t\t                Enemy ships\n\n\n";
+   ret := ret ^ ownBoard.printParallelBoards(enemyBoard);
+   return ret;
+  );
+   
+(*@
+\label{printTakeDown:109}
+@*)
+ public printTakeDown : Board`CellContent ==> String
+  printTakeDown(shipDown) == return "\n\n" ^ enemyBoard.shipToString(shipDown) ^ " is sinking\n";
+  
+(*@
+\label{printVictory:112}
+@*)
+ public printVictory : () ==> String
+  printVictory() == return "\nEnemy fleet destroyed. Victory!\n";
+
+end Player
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Player:17]{Player} & 17&0.0\% & 0 \\
+\hline
+\hyperref[addBoards:28]{addBoards} & 28&0.0\% & 0 \\
+\hline
+\hyperref[allShipsPlaced:43]{allShipsPlaced} & 43&0.0\% & 0 \\
+\hline
+\hyperref[clearData:52]{clearData} & 52&0.0\% & 0 \\
+\hline
+\hyperref[getName:25]{getName} & 25&0.0\% & 0 \\
+\hline
+\hyperref[printGameStatus:98]{printGameStatus} & 98&0.0\% & 0 \\
+\hline
+\hyperref[printInfo:88]{printInfo} & 88&0.0\% & 0 \\
+\hline
+\hyperref[printPlacementStatus:93]{printPlacementStatus} & 93&0.0\% & 0 \\
+\hline
+\hyperref[printTakeDown:109]{printTakeDown} & 109&0.0\% & 0 \\
+\hline
+\hyperref[printVictory:112]{printVictory} & 112&0.0\% & 0 \\
+\hline
+\hyperref[registerAttack:60]{registerAttack} & 60&0.0\% & 0 \\
+\hline
+\hyperref[registerResult:72]{registerResult} & 72&0.0\% & 0 \\
+\hline
+\hyperref[shipPlacement:36]{shipPlacement} & 36&0.0\% & 0 \\
+\hline
+\hyperref[startRounds:46]{startRounds} & 46&0.0\% & 0 \\
+\hline
+\hline
+Player.vdmpp & & 0.0\% & 0 \\
+\hline
+\end{longtable}
+

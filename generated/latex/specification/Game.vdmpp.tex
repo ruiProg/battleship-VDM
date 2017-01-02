@@ -1,0 +1,184 @@
+\begin{vdmpp}[breaklines=true]
+class Game
+types
+ private State = <Off> | <Start> | <Placed> | <Round>
+
+instance variables
+ private inGame: bool := false;
+ private playerA: Player;
+ private playerB: Player;
+ private currPlayer: Player;
+ private players: set of Player := {};
+ private currState: State := <Off>;
+ 
+ inv currPlayer in set {playerA, playerB};
+ inv playerA in set players;
+ inv playerB in set players;
+ inv forall p1, p2 in set players & p1 <> p2 => p1.getName() <> p2.getName();
+ 
+operations
+  
+(*@
+\label{Game:20}
+@*)
+ public Game: Player`String * Player`String ==> Game
+  Game(name1, name2) == (
+   playerA := new Player(name1);
+   playerB := new Player(name2);
+   currPlayer := playerA;
+   players := {playerA, playerB};
+   return self
+  )
+  pre currState= <Off> and name1 <> name2 and card players = 0
+  post card players = 2;
+   
+(*@
+\label{createPlayer:31}
+@*)
+ public createPlayer: (Player`String) ==> Player
+  createPlayer(name) == (
+   dcl player: Player := new Player(name);
+   players := players union {player};
+   return player 
+  )
+  pre not exists p in set players & p.getName() = name;
+    
+(*@
+\label{changePlayers:39}
+@*)
+ public changePlayers: Player`String * Player`String ==> ()
+  changePlayers(name1, name2) == (
+   dcl tmpPlayer: Player := iota p in set players & p.getName() = name1;
+   atomic(playerA := tmpPlayer;
+   playerB := iota p in set players & p.getName() = name2;
+   currPlayer := tmpPlayer;
+   );
+  )
+  pre currState = <Off> and exists p1, p2 in set players & p1.getName() = name1 and p2.getName() = name2;
+   
+(*@
+\label{switchTurns:49}
+@*)
+ public switchTurns: () ==> ()
+  switchTurns() == (
+   if currPlayer = playerA then currPlayer := playerB
+   else currPlayer := playerA
+  )
+  pre currState <> <Off>;
+  
+(*@
+\label{getOtherPlayer:56}
+@*)
+ public getOtherPlayer: () ==> Player
+  getOtherPlayer() == (
+   if currPlayer = playerA then return playerB
+   else return playerA;
+  );
+   
+(*@
+\label{startGame:62}
+@*)
+ public startGame: () ==> Player`String
+  startGame() == (
+   inGame := true;
+   playerA.addBoards();
+   playerB.addBoards();
+   currState := <Start>;
+   return "Game started with following players:\n"
+   ^ playerA.printInfo()
+   ^ playerB.printInfo() ^ "\n\n\n\n"
+   ^ currPlayer.printPlacementStatus(); 
+  )
+  pre currState = <Off>;
+  
+(*@
+\label{shipPlacement:75}
+@*)
+ public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> Player`String
+  shipPlacement(ship, colCh, line, dir) == (
+   dcl ret: Player`String;
+   currPlayer.shipPlacement(ship, colCh, line, dir);
+   ret := currPlayer.printPlacementStatus();
+   if currPlayer.allShipsPlaced() then(
+    switchTurns();
+    ret := ret ^ "\n\n\n\n\n";
+    if currPlayer.allShipsPlaced() then (
+     currState := <Placed>;
+     ret := ret ^ "All ships placed\n";
+    )
+   else ret := ret ^ currPlayer.printPlacementStatus();
+   );
+   return ret;
+  )
+  pre currState = <Start>;
+  
+(*@
+\label{startRounds:93}
+@*)
+ public startRounds: () ==> Player`String
+  startRounds() == (
+   playerA.startRounds();
+   playerB.startRounds();
+   currState := <Round>;
+   return currPlayer.printGameStatus();
+  )
+  pre currState = <Placed>;
+  
+(*@
+\label{guessShipPosition:102}
+@*)
+ public guessShipPosition: char * nat1 ==> Player`String
+  guessShipPosition(colCh, line) == (
+   dcl othPlayer: Player := getOtherPlayer();
+   dcl code: Board`CellContent := othPlayer.registerAttack(colCh, line);
+   dcl ret: Player`String := [];
+   dcl final: bool := currPlayer.registerResult(code, colCh, line);
+   if code = <Miss> then (
+    ret := ret ^ "\n\nSplash!! You missed!\n";
+     switchTurns();
+    )
+   else if code = <Hit> then ret := ret ^ "\n\nGreat strike\n"
+   else ret := ret ^ currPlayer.printTakeDown(code);
+   if final then(
+    ret := ret ^ currPlayer.printVictory();
+    currState := <Off>;
+    playerA.clearData();
+    playerB.clearData();
+    return ret;
+   );
+   ret := ret ^ "\n\n\n\n\n" ^ currPlayer.printGameStatus();
+   return ret;
+  )
+  pre currState = <Round>;
+    
+end Game
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Game:20]{Game} & 20&0.0\% & 0 \\
+\hline
+\hyperref[changePlayers:39]{changePlayers} & 39&0.0\% & 0 \\
+\hline
+\hyperref[createPlayer:31]{createPlayer} & 31&0.0\% & 0 \\
+\hline
+\hyperref[getOtherPlayer:56]{getOtherPlayer} & 56&0.0\% & 0 \\
+\hline
+\hyperref[guessShipPosition:102]{guessShipPosition} & 102&0.0\% & 0 \\
+\hline
+\hyperref[shipPlacement:75]{shipPlacement} & 75&0.0\% & 0 \\
+\hline
+\hyperref[startGame:62]{startGame} & 62&0.0\% & 0 \\
+\hline
+\hyperref[startRounds:93]{startRounds} & 93&0.0\% & 0 \\
+\hline
+\hyperref[switchTurns:49]{switchTurns} & 49&0.0\% & 0 \\
+\hline
+\hline
+Game.vdmpp & & 0.0\% & 0 \\
+\hline
+\end{longtable}
+
