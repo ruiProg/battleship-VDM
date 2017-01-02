@@ -131,7 +131,7 @@ operations
   getShips() == return dom shipSize;
   
 -- retorna o número de navios numa frota
- public getShipsCount : () ==> int
+ public getShipsCount : () ==> nat1
   getShipsCount() == return card dom shipSize;
 
 -- verifica se numa célula existe um navio e regista com <Hit> ou <Miss>
@@ -233,21 +233,21 @@ end Board
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Board:19]{Board} & 19&100.0\% & 4 \\
+\hyperref[Board:19]{Board} & 19&100.0\% & 52 \\
 \hline
-\hyperref[cellToString:123]{cellToString} & 123&0.0\% & 0 \\
+\hyperref[cellToString:123]{cellToString} & 123&100.0\% & 6 \\
 \hline
-\hyperref[countCellType:59]{countCellType} & 59&100.0\% & 1 \\
+\hyperref[countCellType:59]{countCellType} & 59&100.0\% & 101 \\
 \hline
-\hyperref[emptyValidCells:35]{emptyValidCells} & 35&0.0\% & 0 \\
+\hyperref[emptyValidCells:35]{emptyValidCells} & 35&100.0\% & 102 \\
 \hline
-\hyperref[getComponent:36]{getComponent} & 36&0.0\% & 0 \\
+\hyperref[getComponent:36]{getComponent} & 36&100.0\% & 102 \\
 \hline
-\hyperref[getShips:89]{getShips} & 89&0.0\% & 0 \\
+\hyperref[getShips:89]{getShips} & 89&100.0\% & 6 \\
 \hline
-\hyperref[getShipsCount:92]{getShipsCount} & 92&0.0\% & 0 \\
+\hyperref[getShipsCount:92]{getShipsCount} & 92&100.0\% & 6 \\
 \hline
-\hyperref[placeShip:68]{placeShip} & 68&0.0\% & 0 \\
+\hyperref[placeShip:68]{placeShip} & 68&100.0\% & 30 \\
 \hline
 \hyperref[printBoard:129]{printBoard} & 129&0.0\% & 0 \\
 \hline
@@ -255,16 +255,16 @@ Function or operation & Line & Coverage & Calls \\
 \hline
 \hyperref[printRemainShips:159]{printRemainShips} & 159&0.0\% & 0 \\
 \hline
-\hyperref[registerMove:95]{registerMove} & 95&0.0\% & 0 \\
+\hyperref[registerMove:95]{registerMove} & 95&100.0\% & 18 \\
 \hline
-\hyperref[setComponent:25]{setComponent} & 25&100.0\% & 2 \\
+\hyperref[setComponent:25]{setComponent} & 25&100.0\% & 122 \\
 \hline
-\hyperref[setComponentCol:31]{setComponentCol} & 31&100.0\% & 1 \\
+\hyperref[setComponentCol:31]{setComponentCol} & 31&100.0\% & 16 \\
 \hline
-\hyperref[shipToString:108]{shipToString} & 108&0.0\% & 0 \\
+\hyperref[shipToString:108]{shipToString} & 108&24.1\% & 12 \\
 \hline
 \hline
-Board.vdmpp & & 22.5\% & 8 \\
+Board.vdmpp & & 70.1\% & 573 \\
 \hline
 \end{longtable}
 

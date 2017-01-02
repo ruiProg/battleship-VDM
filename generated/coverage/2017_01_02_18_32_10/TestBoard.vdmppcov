@@ -41,8 +41,8 @@ operations
 		b.placeShip(<Submarine>,'C',2,<Right>);
 		TestBase`assertEqual(b.countCellType(<Submarine>),3);
 		
-		b.placeShip(<Carrier>,'J',1,<Down>);
-		TestBase`assertEqual(b.countCellType(<Carrier>),5);
+		--b.placeShip(<Cruiser>,'J',1,<Down>);
+		--TestBase`assertEqual(b.countCellType(<Cruiser>),3);
 		
 		b.placeShip(<Destroyer>,'J',9,<Left>);
 		TestBase`assertEqual(b.countCellType(<Destroyer>),2);
