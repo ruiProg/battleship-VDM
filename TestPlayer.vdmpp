@@ -1,0 +1,9 @@
+class TestPlayer is subclass of Player
+operations
+
+	
+	public run: () ==> ()
+		run() == (
+			return;
+	);
+end TestBoard

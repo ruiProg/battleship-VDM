@@ -13,7 +13,10 @@ operations
 	static public runAllTests: () ==> ()
 		runAllTests() == (
 				dcl tb: TestBoard := new TestBoard();
+				dcl tp: TestPlayer := new TestPlayer();
+				dcl tg: TestGame := new TestGame();
 				tb.run();
-				
+				tp.run();
+				tg.run();
 				);
 end TestBase
