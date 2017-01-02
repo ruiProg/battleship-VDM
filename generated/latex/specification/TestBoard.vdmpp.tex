@@ -1,7 +1,7 @@
 \begin{vdmpp}[breaklines=true]
 class TestBoard is subclass of Board
-operations
- 
+
+operations 
 (*@
 \label{testCreateBoard:4}
 @*)
@@ -35,6 +35,7 @@ operations
 (*@
 \label{testEmptyBeforePlacement:25}
 @*)
+ -- testa limites do tabuleiro e disponibilidade de uma célula
  private testEmptyBeforePlacement: () ==> ()
   testEmptyBeforePlacement() == (
   dcl b: Board := new Board();
@@ -48,23 +49,23 @@ operations
   TestBase`assertTrue(not b.emptyValidCells(6,colMap('C'),<Right>,5));
   TestBase`assertTrue(not b.emptyValidCells(6,colMap('H'),<Left>,4));
   TestBase`assertTrue(not b.emptyValidCells(2,colMap('H'),<Right>,5));
-  
 (*@
 \label{testGetShips:39}
 @*)
 (*@
 \label{getShips:39}
 @*)
+  
   TestBase`assertEqual(b.countCellType(<Submarine>),0);
   TestBase`assertEqual(shipSize(<Submarine>),3);
   b.placeShip(<Submarine>,'C',2,<Right>);
   TestBase`assertEqual(b.countCellType(<Submarine>),3);
   
   b.placeShip(<Carrier>,'J',1,<Down>);
-  TestBase`assertEqual(b.countCellType(<Carrier>),5);
 (*@
 \label{testRegisterMove:46}
 @*)
+  TestBase`assertEqual(b.countCellType(<Carrier>),5);
   
   b.placeShip(<Destroyer>,'J',9,<Left>);
   TestBase`assertEqual(b.countCellType(<Destroyer>),2);
@@ -73,6 +74,7 @@ operations
   TestBase`assertEqual(b.countCellType(<Battleship>),4);
  );
  
+ -- teste simples get da frota
  private testGetShips: () ==> ()
   testGetShips() == (
    dcl b: Board := new Board();
@@ -80,12 +82,13 @@ operations
    TestBase`assertEqual(b.getShips(),{<Carrier>, <Battleship>, <Cruiser>, <Submarine>, <Destroyer>});
  );
  
- private testRegisterMove: () ==> ()
-  testRegisterMove() == (
-   dcl b: Board := new Board();
+ -- testa uma tentativa de afundar um navio
 (*@
 \label{testPrints:64}
 @*)
+ private testRegisterMove: () ==> ()
+  testRegisterMove() == (
+   dcl b: Board := new Board();
    dcl ret: CellContent := <Empty>;
    b.placeShip(<Submarine>,'C',2,<Right>);
    ret := b.registerMove('A',3);
@@ -124,24 +127,24 @@ end TestBoard
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[getShips:39]{getShips} & 39&100.0\% & 24 \\
+\hyperref[getShips:39]{getShips} & 39&100.0\% & 3 \\
 \hline
-\hyperref[run:9]{run} & 9&100.0\% & 8 \\
+\hyperref[run:9]{run} & 9&100.0\% & 3 \\
 \hline
-\hyperref[testColMap:11]{testColMap} & 11&100.0\% & 8 \\
+\hyperref[testColMap:11]{testColMap} & 11&100.0\% & 3 \\
 \hline
-\hyperref[testCreateBoard:4]{testCreateBoard} & 4&100.0\% & 8 \\
+\hyperref[testCreateBoard:4]{testCreateBoard} & 4&100.0\% & 3 \\
 \hline
-\hyperref[testEmptyBeforePlacement:25]{testEmptyBeforePlacement} & 25&100.0\% & 8 \\
+\hyperref[testEmptyBeforePlacement:25]{testEmptyBeforePlacement} & 25&100.0\% & 3 \\
 \hline
-\hyperref[testGetShips:39]{testGetShips} & 39&100.0\% & 6 \\
+\hyperref[testGetShips:39]{testGetShips} & 39&100.0\% & 3 \\
 \hline
-\hyperref[testPrints:64]{testPrints} & 64&100.0\% & 6 \\
+\hyperref[testPrints:64]{testPrints} & 64&100.0\% & 3 \\
 \hline
-\hyperref[testRegisterMove:46]{testRegisterMove} & 46&100.0\% & 6 \\
+\hyperref[testRegisterMove:46]{testRegisterMove} & 46&100.0\% & 3 \\
 \hline
 \hline
-TestBoard.vdmpp & & 100.0\% & 74 \\
+TestBoard.vdmpp & & 100.0\% & 24 \\
 \hline
 \end{longtable}
 

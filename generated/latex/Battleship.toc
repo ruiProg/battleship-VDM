@@ -2,4 +2,6 @@
 \contentsline {section}{\numberline {2}Game}{5}{section.2}
 \contentsline {section}{\numberline {3}Player}{7}{section.3}
 \contentsline {section}{\numberline {4}TestBase}{10}{section.4}
-\contentsline {section}{\numberline {5}TestBoard}{10}{section.5}
+\contentsline {section}{\numberline {5}TestBoard}{11}{section.5}
+\contentsline {section}{\numberline {6}TestGame}{13}{section.6}
+\contentsline {section}{\numberline {7}TestPlayer}{13}{section.7}

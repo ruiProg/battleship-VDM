@@ -102,6 +102,7 @@ operations
 			ret := pl.registerResult(<Battleship>,'C',4);
 			TestBase`assertTrue(ret);
 			TestBase`assertEqual(pl.wins,nbWins+1);
+			
 	);
 	
 	public run: () ==> ()

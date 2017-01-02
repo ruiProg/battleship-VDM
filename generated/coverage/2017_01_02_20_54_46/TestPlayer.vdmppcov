@@ -94,7 +94,7 @@ operations
 			TestBase`assertEqual(card pl.enemiesShips, nbShips);
 			
 			ret := pl.registerResult(<Submarine>,'A',6);
-			TestBase`assertEqual(card pl.enemiesShips, nbShips+1);
+			TestBase`assertEqual(card pl.enemiesShips, nbShips-1);
 			
 			ret := pl.registerResult(<Cruiser>,'J',2);
 			ret := pl.registerResult(<Carrier>,'D',10);
@@ -102,6 +102,7 @@ operations
 			ret := pl.registerResult(<Battleship>,'C',4);
 			TestBase`assertTrue(ret);
 			TestBase`assertEqual(pl.wins,nbWins+1);
+			
 	);
 	
 	public run: () ==> ()
