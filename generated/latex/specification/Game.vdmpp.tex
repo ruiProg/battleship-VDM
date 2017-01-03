@@ -21,7 +21,7 @@ operations
 (*@
 \label{Game:20}
 @*)
- public Game: Player`String * Player`String ==> Game
+ public Game: Player`string * Player`string ==> Game
   Game(name1, name2) == (
    playerA := new Player(name1);
    playerB := new Player(name2);
@@ -32,23 +32,23 @@ operations
   pre currState= <Off> and name1 <> name2
   post card players = 2;
    
-(*@
-\label{createPlayer:31}
-@*)
   -- cria novo jogador com determinado nome se nome ainda não estiver registado
- public createPlayer: (Player`String) ==> Player
+(*@
+\label{createPlayer:32}
+@*)
+ public createPlayer: (Player`string) ==> Player
   createPlayer(name) == (
    dcl player: Player := new Player(name);
    players := players union {player};
    return player 
   )
   pre not exists p in set players & p.getName() = name;
-(*@
-\label{changePlayers:39}
-@*)
   
   --muda os jogadores que vão realizar jogo 
- public changePlayers: Player`String * Player`String ==> ()
+(*@
+\label{changePlayers:41}
+@*)
+ public changePlayers: Player`string * Player`string ==> ()
   changePlayers(name1, name2) == (
    dcl tmpPlayer: Player := iota p in set players & p.getName() = name1;
    atomic(playerA := tmpPlayer;
@@ -56,34 +56,34 @@ operations
    currPlayer := tmpPlayer;
    );
   )
-(*@
-\label{switchTurns:49}
-@*)
   pre currState = <Off> and exists p1, p2 in set players & p1.getName() = name1 and p2.getName() = name2;
    
   -- muda o turno para jogar em cada ronda
+(*@
+\label{switchTurns:52}
+@*)
  public switchTurns: () ==> ()
   switchTurns() == (
    if currPlayer = playerA then currPlayer := playerB
    else currPlayer := playerA
-(*@
-\label{getOtherPlayer:56}
-@*)
   )
   pre currState <> <Off>;
   
   -- retorna o jogador que aguarda o ataque do adversário
+(*@
+\label{getOtherPlayer:60}
+@*)
  public getOtherPlayer: () ==> Player
   getOtherPlayer() == (
-(*@
-\label{startGame:62}
-@*)
    if currPlayer = playerA then return playerB
    else return playerA;
   );
    
    -- inicia jogo
- public startGame: () ==> Player`String
+(*@
+\label{startGame:67}
+@*)
+ public startGame: () ==> Player`string
   startGame() == (
    playerA.addBoards();
    playerB.addBoards();
@@ -91,17 +91,17 @@ operations
    return "Game started with following players:\n"
    ^ playerA.printInfo()
    ^ playerB.printInfo() ^ "\n\n\n\n"
-(*@
-\label{shipPlacement:75}
-@*)
    ^ currPlayer.printPlacementStatus(); 
   )
   pre currState = <Off>;
   
   -- jogador ativo colca os navios no tabuleiro
- public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> Player`String
+(*@
+\label{shipPlacement:80}
+@*)
+ public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> Player`string
   shipPlacement(ship, colCh, line, dir) == (
-   dcl ret: Player`String;
+   dcl ret: Player`string;
    currPlayer.shipPlacement(ship, colCh, line, dir);
    ret := currPlayer.printPlacementStatus();
    if currPlayer.allShipsPlaced() then(
@@ -112,21 +112,18 @@ operations
      ret := ret ^ "All ships placed\n";
     )
    else ret := ret ^ currPlayer.printPlacementStatus();
-(*@
-\label{startRounds:93}
-@*)
    );
    return ret;
   )
   pre currState = <Start>;
   
   -- inicia rondas no jogo
- public startRounds: () ==> Player`String
+(*@
+\label{startRounds:99}
+@*)
+ public startRounds: () ==> Player`string
   startRounds() == (
    playerA.startRounds();
-(*@
-\label{guessShipPosition:102}
-@*)
    playerB.startRounds();
    currState := <Round>;
    return currPlayer.printGameStatus();
@@ -134,11 +131,14 @@ operations
   pre currState = <Placed>;
   
   -- jogador activo tenta adivinhar posição de um navio adversário
- public guessShipPosition: char * nat1 ==> Player`String
+(*@
+\label{guessShipPosition:109}
+@*)
+ public guessShipPosition: char * nat1 ==> Player`string
   guessShipPosition(colCh, line) == (
    dcl othPlayer: Player := getOtherPlayer();
    dcl code: Board`CellContent := othPlayer.registerAttack(colCh, line);
-   dcl ret: Player`String := [];
+   dcl ret: Player`string := [];
    dcl final: bool := currPlayer.registerResult(code, colCh, line);
    if code = <Miss> then (
     ret := ret ^ "\n\nSplash!! You missed!\n";
@@ -166,26 +166,26 @@ end Game
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Game:20]{Game} & 20&100.0\% & 9 \\
+\hyperref[Game:20]{Game} & 20&100.0\% & 6 \\
 \hline
-\hyperref[changePlayers:39]{changePlayers} & 39&100.0\% & 3 \\
+\hyperref[changePlayers:41]{changePlayers} & 41&100.0\% & 2 \\
 \hline
-\hyperref[createPlayer:31]{createPlayer} & 31&100.0\% & 3 \\
+\hyperref[createPlayer:32]{createPlayer} & 32&100.0\% & 2 \\
 \hline
-\hyperref[getOtherPlayer:56]{getOtherPlayer} & 56&100.0\% & 55 \\
+\hyperref[getOtherPlayer:60]{getOtherPlayer} & 60&100.0\% & 40 \\
 \hline
-\hyperref[guessShipPosition:102]{guessShipPosition} & 102&100.0\% & 55 \\
+\hyperref[guessShipPosition:109]{guessShipPosition} & 109&100.0\% & 40 \\
 \hline
-\hyperref[shipPlacement:75]{shipPlacement} & 75&100.0\% & 60 \\
+\hyperref[shipPlacement:80]{shipPlacement} & 80&100.0\% & 40 \\
 \hline
-\hyperref[startGame:62]{startGame} & 62&100.0\% & 6 \\
+\hyperref[startGame:67]{startGame} & 67&100.0\% & 4 \\
 \hline
-\hyperref[startRounds:93]{startRounds} & 93&100.0\% & 3 \\
+\hyperref[startRounds:99]{startRounds} & 99&100.0\% & 2 \\
 \hline
-\hyperref[switchTurns:49]{switchTurns} & 49&100.0\% & 23 \\
+\hyperref[switchTurns:52]{switchTurns} & 52&100.0\% & 14 \\
 \hline
 \hline
-Game.vdmpp & & 100.0\% & 217 \\
+Game.vdmpp & & 100.0\% & 150 \\
 \hline
 \end{longtable}
 

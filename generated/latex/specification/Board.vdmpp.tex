@@ -17,37 +17,31 @@ instance variables
  
  inv len cells = 10; -- cada tabuleiro tem 10 linhas
  inv card {i| i in set inds cells & len cells(i) = 10} = 10; -- cada linha tem 10 colunas
-(*@
-\label{Board:19}
-@*)
  
 operations
 --cria tabuleiro com todas células vazias
+(*@
+\label{Board:22}
+@*)
  public Board: () ==> Board
   Board() == (
    cells := [[<Empty>| x in set {1,...,10}]| x in set {1,...,10}];
-(*@
-\label{setComponent:25}
-@*)
    return self;
   );
   
 --preenche a célula (line,col) com content
+(*@
+\label{setComponent:29}
+@*)
  public setComponent: CellContent * nat1 * nat1 ==> ()
   setComponent(content, line, col) == (
-(*@
-\label{setComponentCol:31}
-@*)
    cells(line) := cells(line) ++ {col |-> content}
   )
   pre col <= 10 and line <= 10 and content <> <Empty>;
 
-(*@
-\label{emptyValidCells:35}
-@*)
 --mapeia coluna para índice e chama função para preencher célula
 (*@
-\label{getComponent:36}
+\label{setComponentCol:36}
 @*)
  public setComponentCol: CellContent * nat1 * char ==> ()
   setComponentCol(content, line, colCh) == setComponent(content, line, colMap(colCh))
@@ -55,6 +49,9 @@ operations
 
 -- tendo a célula A=(line,col) e size-1 céulas numa determinada direcção (dir)
 -- todas estas células estão dentro dos limites do tabuleiro e estão vazias
+(*@
+\label{emptyValidCells:42}
+@*)
  pure public emptyValidCells: nat1 * nat1 * Direction * nat1 ==> bool
   emptyValidCells(line, col, dir, size) == (
    if dir = <Up> then
@@ -72,9 +69,6 @@ operations
      if col - i <= 0 then return false;
      if cells(line)(col - i) <> <Empty> then return false;
      )
-(*@
-\label{countCellType:59}
-@*)
    else for i = 0 to size - 1 do (
      if col + i > 10 then return false;
      if cells(line)(col + i) <> <Empty> then return false;
@@ -83,10 +77,10 @@ operations
   );
   
 -- verifica o número de células do tabuleiro preenchidas com determinada componente
- pure public countCellType: CellContent ==> nat
 (*@
-\label{placeShip:68}
+\label{countCellType:67}
 @*)
+ pure public countCellType: CellContent ==> nat
   countCellType(type) == (
    dcl sum : nat := 0;
    for i = 1 to len cells do
@@ -96,6 +90,9 @@ operations
   );
 
 -- coloca um navio no tabuleiro dada célula A=(line, colCh) numa determinada direcção
+(*@
+\label{placeShip:77}
+@*)
  public placeShip: CellContent * char * nat1 * Direction ==> ()
   placeShip(ship, colCh, line, dir) == (
    dcl col: nat1 := colMap(colCh);
@@ -108,37 +105,34 @@ operations
    else if dir = <Left> then
     for i = 0 to shipSize(ship) - 1 do
      setComponent(ship, line, col - i)
-(*@
-\label{getShips:89}
-@*)
    else for i = 0 to shipSize(ship) - 1 do
      setComponent(ship, line, col + i)
   )
-(*@
-\label{getShipsCount:92}
-@*)
   pre ship in set dom shipSize
   and colCh in set dom colMap
   and countCellType(ship) = 0
-(*@
-\label{registerMove:95}
-@*)
   and emptyValidCells(line, colMap(colCh), dir, shipSize(ship)) --check if cells that a ship takes are empty and if ship fits in the board
   post countCellType(ship) = shipSize(ship); 
   
 -- retorna a lista de navios numa frota
+(*@
+\label{getShips:99}
+@*)
  public getShips : () ==> set of CellContent
   getShips() == return dom shipSize;
   
 -- retorna o número de navios numa frota
+(*@
+\label{getShipsCount:103}
+@*)
  public getShipsCount : () ==> nat1
   getShipsCount() == return card dom shipSize;
 
 -- verifica se numa célula existe um navio e regista com <Hit> ou <Miss>
- public registerMove: char * nat1 ==> CellContent
 (*@
-\label{shipToString:108}
+\label{registerMove:107}
 @*)
+ public registerMove: char * nat1 ==> CellContent
   registerMove(colCh, line) == (
    dcl col: nat1 := colMap(colCh);
    dcl oldValue: CellContent := cells(line)(col);
@@ -152,20 +146,17 @@ operations
 --- print to console
   
  -- retorna o navio em string
- public shipToString : CellContent ==> Player`String
-  shipToString(type) == (
 (*@
-\label{cellToString:123}
+\label{shipToString:121}
 @*)
+ public shipToString : CellContent ==> Player`string
+  shipToString(type) == (
    cases type:
    <Empty> -> return "Empty",
    <Carrier> -> return "Carrier",
    <Battleship> -> return "Battleship",
    <Cruiser> -> return "Cruiser",
    <Submarine> -> return "Submarine",
-(*@
-\label{printBoard:129}
-@*)
    <Destroyer> -> return "Destroyer",
    <Hit> -> return "Hit",
    <Miss> -> return "Miss"
@@ -174,19 +165,22 @@ operations
   );
   
   -- retorna a representação de um navio no tabuleiro
- public cellToString : CellContent ==> Player`String
-  cellToString(type) == (
-   dcl fullStr: Player`String := shipToString(type);
 (*@
-\label{printParallelBoards:140}
+\label{cellToString:137}
 @*)
+ public cellToString : CellContent ==> Player`string
+  cellToString(type) == (
+   dcl fullStr: Player`string := shipToString(type);
    return [fullStr(i)| i in set inds fullStr & i < 4];
   );
   
   -- imprime um tabuleiro e peças lá inseridas
- public printBoard : () ==> Player`String
+(*@
+\label{printBoard:144}
+@*)
+ public printBoard : () ==> Player`string
   printBoard() == (
-   dcl board: Player`String := [];
+   dcl board: Player`string := [];
    for i = 1 to len cells do (
     if i < 10 then board := board ^ "0";
     board := board ^ VDMUtil`val2seq_of_char[nat](i) ^ "    ";
@@ -196,12 +190,12 @@ operations
    return "      A      B      C      D      E      F      G      H      I      J    \n\n" ^ board);
  
  -- imprime dois tabuleiros lado a lado
- public printParallelBoards : Board  ==> Player`String
-  printParallelBoards(enemyBoard) == (
-   dcl pBoard: Player`String := [];
 (*@
-\label{printRemainShips:159}
+\label{printParallelBoards:156}
 @*)
+ public printParallelBoards : Board  ==> Player`string
+  printParallelBoards(enemyBoard) == (
+   dcl pBoard: Player`string := [];
    for i = 1 to len cells do (
     if i < 10 then pBoard := pBoard ^ "0";
     pBoard := pBoard ^ VDMUtil`val2seq_of_char[nat](i) ^ "    ";
@@ -218,9 +212,12 @@ operations
    "\t\t\t" ^ "      A      B      C      D      E      F      G      H      I      J    \n\n" ^ pBoard);
    
  -- imprime os navios de uma lista em formato string
- public printRemainShips: set of CellContent ==> Player`String
+(*@
+\label{printRemainShips:175}
+@*)
+ public printRemainShips: set of CellContent ==> Player`string
   printRemainShips(ships) == (
-   dcl res: Player`String := [];
+   dcl res: Player`string := [];
    for all ship in set ships do res := res ^ shipToString(ship) ^ ": " ^ VDMUtil`val2seq_of_char[nat](shipSize(ship)) ^ "    ";
    return res;
   )
@@ -233,38 +230,36 @@ end Board
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Board:19]{Board} & 19&100.0\% & 69 \\
+\hyperref[Board:22]{Board} & 22&100.0\% & 46 \\
 \hline
-\hyperref[cellToString:123]{cellToString} & 123&100.0\% & 18603 \\
+\hyperref[cellToString:137]{cellToString} & 137&100.0\% & 12802 \\
 \hline
-\hyperref[countCellType:59]{countCellType} & 59&100.0\% & 343 \\
+\hyperref[countCellType:67]{countCellType} & 67&100.0\% & 232 \\
 \hline
-\hyperref[emptyValidCells:35]{emptyValidCells} & 35&100.0\% & 132 \\
+\hyperref[emptyValidCells:42]{emptyValidCells} & 42&100.0\% & 88 \\
 \hline
-\hyperref[getComponent:36]{getComponent} & 36&100.0\% & 132 \\
+\hyperref[getShips:99]{getShips} & 99&100.0\% & 26 \\
 \hline
-\hyperref[getShips:89]{getShips} & 89&100.0\% & 39 \\
+\hyperref[getShipsCount:103]{getShipsCount} & 103&100.0\% & 48 \\
 \hline
-\hyperref[getShipsCount:92]{getShipsCount} & 92&100.0\% & 65 \\
+\hyperref[placeShip:77]{placeShip} & 77&100.0\% & 70 \\
 \hline
-\hyperref[placeShip:68]{placeShip} & 68&100.0\% & 105 \\
+\hyperref[printBoard:144]{printBoard} & 144&100.0\% & 48 \\
 \hline
-\hyperref[printBoard:129]{printBoard} & 129&100.0\% & 72 \\
+\hyperref[printParallelBoards:156]{printParallelBoards} & 156&100.0\% & 40 \\
 \hline
-\hyperref[printParallelBoards:140]{printParallelBoards} & 140&100.0\% & 57 \\
+\hyperref[printRemainShips:175]{printRemainShips} & 175&100.0\% & 48 \\
 \hline
-\hyperref[printRemainShips:159]{printRemainShips} & 159&100.0\% & 72 \\
+\hyperref[registerMove:107]{registerMove} & 107&100.0\% & 84 \\
 \hline
-\hyperref[registerMove:95]{registerMove} & 95&100.0\% & 121 \\
+\hyperref[setComponent:29]{setComponent} & 29&100.0\% & 298 \\
 \hline
-\hyperref[setComponent:25]{setComponent} & 25&100.0\% & 442 \\
+\hyperref[setComponentCol:36]{setComponentCol} & 36&100.0\% & 58 \\
 \hline
-\hyperref[setComponentCol:31]{setComponentCol} & 31&100.0\% & 82 \\
-\hline
-\hyperref[shipToString:108]{shipToString} & 108&93.1\% & 19129 \\
+\hyperref[shipToString:121]{shipToString} & 121&93.1\% & 13214 \\
 \hline
 \hline
-Board.vdmpp & & 99.6\% & 39463 \\
+Board.vdmpp & & 99.6\% & 27102 \\
 \hline
 \end{longtable}
 

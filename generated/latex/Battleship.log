@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.30)  3 JAN 2017 00:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.30)  3 JAN 2017 01:25
 entering extended mode
 **./Battleship.tex
 (Battleship.tex
@@ -210,14 +210,7 @@ Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
 \c@LT@tables=\count109
 \c@LT@chunks=\count110
 \LT@p@ftn=\toks16
-) (Battleship.aux
-
-LaTeX Warning: Label `run:5' multiply defined.
-
-
-LaTeX Warning: Label `testCreateBoard:5' multiply defined.
-
-)
+) (Battleship.aux)
 \openout1 = `Battleship.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -235,7 +228,8 @@ LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Try loading font information for OT1+ptm on input line 6.
- ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 \c@lstlisting=\count111
@@ -326,11 +320,67 @@ Missing character: There is no ú in font pcrro7t!
 Missing character: There is no é in font pcrro7t!
 Missing character: There is no ç in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
- [3]
 Missing character: There is no ç in font pcrro7t!
 Missing character: There is no á in font pcrro7t!
+ [3]
 
-Underfull \vbox (badness 10000) detected at line 269
+LaTeX Warning: Hyper reference `Board:22' on page 4 undefined on input line 233
+.
+
+
+LaTeX Warning: Hyper reference `cellToString:137' on page 4 undefined on input 
+line 235.
+
+
+LaTeX Warning: Hyper reference `countCellType:67' on page 4 undefined on input 
+line 237.
+
+
+LaTeX Warning: Hyper reference `emptyValidCells:42' on page 4 undefined on inpu
+t line 239.
+
+
+LaTeX Warning: Hyper reference `getShips:99' on page 4 undefined on input line 
+241.
+
+
+LaTeX Warning: Hyper reference `getShipsCount:103' on page 4 undefined on input
+ line 243.
+
+
+LaTeX Warning: Hyper reference `placeShip:77' on page 4 undefined on input line
+ 245.
+
+
+LaTeX Warning: Hyper reference `printBoard:144' on page 4 undefined on input li
+ne 247.
+
+
+LaTeX Warning: Hyper reference `printParallelBoards:156' on page 4 undefined on
+ input line 249.
+
+
+LaTeX Warning: Hyper reference `printRemainShips:175' on page 4 undefined on in
+put line 251.
+
+
+LaTeX Warning: Hyper reference `registerMove:107' on page 4 undefined on input 
+line 253.
+
+
+LaTeX Warning: Hyper reference `setComponent:29' on page 4 undefined on input l
+ine 255.
+
+
+LaTeX Warning: Hyper reference `setComponentCol:36' on page 4 undefined on inpu
+t line 257.
+
+
+LaTeX Warning: Hyper reference `shipToString:121' on page 4 undefined on input 
+line 259.
+
+
+Underfull \vbox (badness 10000) detected at line 264
  []
 
 [4]) (specification/Game.vdmpp.tex
@@ -338,11 +388,10 @@ Missing character: There is no ã in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
  [5]
 Missing character: There is no á in font pcrro7t!
- [6]
 Missing character: There is no ç in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
 Missing character: There is no á in font pcrro7t!
-
+ [6]
 Underfull \vbox (badness 10000) detected at line 190
  []
 
@@ -362,17 +411,17 @@ Missing character: There is no ó in font pcrro7t!
 Underfull \vbox (badness 10000) detected at line 209
  []
 
-) (specification/TestBase.vdmpp.tex [10]
-Underfull \vbox (badness 10000) detected at line 54
+) (specification/TestBase.vdmpp.tex
+Underfull \vbox (badness 10000) detected at line 49
  []
 
-) (specification/TestBoard.vdmpp.tex
+[10]) (specification/TestBoard.vdmpp.tex
 Missing character: There is no é in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
 Missing character: There is no í in font pcrro7t!
 Missing character: There is no é in font pcrro7t!
  [11]
-Underfull \vbox (badness 10000) detected at line 149
+Underfull \vbox (badness 10000) detected at line 144
  []
 
 [12]) (specification/TestGame.vdmpp.tex
@@ -380,12 +429,12 @@ Missing character: There is no ç in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
 Missing character: There is no ç in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
- [13] [14]
-Underfull \vbox (badness 10000) detected at line 155
+ [13]
+Underfull \vbox (badness 10000) detected at line 140
  []
 
-) (specification/TestPlayer.vdmpp.tex [15] [16]
-Underfull \vbox (badness 10000) detected at line 166
+[14]) (specification/TestPlayer.vdmpp.tex [15] [16]
+Underfull \vbox (badness 10000) detected at line 151
  []
 
 )
@@ -399,27 +448,48 @@ Package rerunfilecheck Info: File `Battleship.out' has not changed.
 (rerunfilecheck)             Checksum: FC53F24CEEA11C8C21C9B77210482168;302.
 
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 27.
  ) 
 Here is how much of TeX's memory you used:
- 7538 strings out of 493333
- 110858 string characters out of 3139190
- 482243 words of memory out of 3000000
- 10115 multiletter control sequences out of 15000+200000
+ 7528 strings out of 493333
+ 110694 string characters out of 3139190
+ 485366 words of memory out of 3000000
+ 10108 multiletter control sequences out of 15000+200000
  17044 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 33i,6n,48p,279b,1932s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/couri
-er/ucrro8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C
-:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on Battleship.pdf (17 pages, 246078 bytes).
+ 33i,6n,48p,279b,1930s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{lstnumber.-5.105} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{lstnumber.-4.68} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{lstnumber.-4.87} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{lstnumber.-4.59} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{lstnumber.-4.28} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{lstnumber.-4.94} has been referenced but does not e
+xist, replaced by a fixed one
+
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
+pe1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier
+/ucrro8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/
+Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
+Output written on Battleship.pdf (17 pages, 240535 bytes).
 PDF statistics:
- 1245 PDF objects out of 1440 (max. 8388607)
- 888 named destinations out of 1000 (max. 500000)
+ 1219 PDF objects out of 1440 (max. 8388607)
+ 885 named destinations out of 1000 (max. 500000)
  57 words of extra memory for PDF output out of 10000 (max. 10000000)
 

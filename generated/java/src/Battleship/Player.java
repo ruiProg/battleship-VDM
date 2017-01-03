@@ -128,13 +128,13 @@ public class Player {
   public String printGameStatus() {
 
     String ret = "Player turn: " + name + "\nMy active ships: ";
-    for (Iterator iterator_5 = myShips.iterator(); iterator_5.hasNext(); ) {
-      Object ship = (Object) iterator_5.next();
+    for (Iterator iterator_10 = myShips.iterator(); iterator_10.hasNext(); ) {
+      Object ship = (Object) iterator_10.next();
       ret = ret + ownBoard.shipToString(((Object) ship)) + "   ";
     }
     ret = ret + "\nDestroyed enemies ships: ";
-    for (Iterator iterator_6 = enemiesShips.iterator(); iterator_6.hasNext(); ) {
-      Object ship = (Object) iterator_6.next();
+    for (Iterator iterator_11 = enemiesShips.iterator(); iterator_11.hasNext(); ) {
+      Object ship = (Object) iterator_11.next();
       ret = ret + enemyBoard.shipToString(((Object) ship)) + "   ";
     }
     ret =

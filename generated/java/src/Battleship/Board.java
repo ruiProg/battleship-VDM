@@ -35,7 +35,7 @@ public class Board {
       VDMSeq seqCompResult_2 = SeqUtil.seq();
       VDMSet set_2 = SetUtil.range(1L, 10L);
       for (Iterator iterator_2 = set_2.iterator(); iterator_2.hasNext(); ) {
-        Number x = ((Number) iterator_2.next());
+        Number y = ((Number) iterator_2.next());
         seqCompResult_2.add(Battleship.quotes.EmptyQuote.getInstance());
       }
       seqCompResult_1.add(Utils.copy(seqCompResult_2));
@@ -288,7 +288,7 @@ public class Board {
     for (Iterator iterator_3 = set_3.iterator(); iterator_3.hasNext(); ) {
       Number i = ((Number) iterator_3.next());
       if (i.longValue() < 4L) {
-        seqCompResult_3.add(fullStr.charAt(Utils.index(i)));
+        seqCompResult_3 += fullStr.charAt(Utils.index(i));
       }
     }
     return seqCompResult_3;
@@ -358,8 +358,8 @@ public class Board {
   public String printRemainShips(final VDMSet ships) {
 
     String res = SeqUtil.toStr(SeqUtil.seq());
-    for (Iterator iterator_4 = ships.iterator(); iterator_4.hasNext(); ) {
-      Object ship = (Object) iterator_4.next();
+    for (Iterator iterator_8 = ships.iterator(); iterator_8.hasNext(); ) {
+      Object ship = (Object) iterator_8.next();
       res =
           res
               + shipToString(((Object) ship))

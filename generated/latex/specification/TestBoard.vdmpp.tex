@@ -2,23 +2,20 @@
 class TestBoard is subclass of Board
 
 operations 
-(*@
-\label{testCreateBoard:4}
-@*)
  -- todas as células estão vazias ao criar o tabuleiro
+(*@
+\label{testCreateBoard:5}
+@*)
  private testCreateBoard : () ==> ()
   testCreateBoard() == (
    dcl b: Board := new Board();
    TestBase`assertEqual(b.countCellType(<Empty>),100);
-(*@
-\label{run:9}
-@*)
  );
  
-(*@
-\label{testColMap:11}
-@*)
  -- testa mapeamento entre colunas char e seu índice
+(*@
+\label{testColMap:12}
+@*)
  private testColMap : () ==> ()
   testColMap() == (
    dcl b: Board := new Board();
@@ -32,10 +29,10 @@ operations
    TestBase`assertEqual(b.cells(1)(2),c.cells(1)(colMap('B')));
  );
  
-(*@
-\label{testEmptyBeforePlacement:25}
-@*)
  -- testa limites do tabuleiro e disponibilidade de uma célula
+(*@
+\label{testEmptyBeforePlacement:26}
+@*)
  private testEmptyBeforePlacement: () ==> ()
   testEmptyBeforePlacement() == (
   dcl b: Board := new Board();
@@ -49,12 +46,6 @@ operations
   TestBase`assertTrue(not b.emptyValidCells(6,colMap('C'),<Right>,5));
   TestBase`assertTrue(not b.emptyValidCells(6,colMap('H'),<Left>,4));
   TestBase`assertTrue(not b.emptyValidCells(2,colMap('H'),<Right>,5));
-(*@
-\label{testGetShips:39}
-@*)
-(*@
-\label{getShips:39}
-@*)
   
   TestBase`assertEqual(b.countCellType(<Submarine>),0);
   TestBase`assertEqual(shipSize(<Submarine>),3);
@@ -62,9 +53,6 @@ operations
   TestBase`assertEqual(b.countCellType(<Submarine>),3);
   
   b.placeShip(<Carrier>,'J',1,<Down>);
-(*@
-\label{testRegisterMove:46}
-@*)
   TestBase`assertEqual(b.countCellType(<Carrier>),5);
   
   b.placeShip(<Destroyer>,'J',9,<Left>);
@@ -75,6 +63,9 @@ operations
  );
  
  -- teste simples get da frota
+(*@
+\label{testGetShips:56}
+@*)
  private testGetShips: () ==> ()
   testGetShips() == (
    dcl b: Board := new Board();
@@ -84,7 +75,7 @@ operations
  
  -- testa uma tentativa de afundar um navio
 (*@
-\label{testPrints:64}
+\label{testRegisterMove:64}
 @*)
  private testRegisterMove: () ==> ()
   testRegisterMove() == (
@@ -104,12 +95,18 @@ operations
    TestBase`assertEqual(b.cells(2)(colMap('C')),<Hit>);
   );
   
+(*@
+\label{testPrints:82}
+@*)
  private testPrints: () ==> ()
   testPrints() == (
    TestBase`assertEqual(shipToString(<Carrier>),"Carrier");
    TestBase`assertEqual(cellToString(<Carrier>),"Car");
  );
  
+(*@
+\label{run:88}
+@*)
  public run: () ==> ()
   run() == (
    testCreateBoard();
@@ -127,24 +124,22 @@ end TestBoard
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[getShips:39]{getShips} & 39&100.0\% & 3 \\
+\hyperref[run:88]{run} & 88&100.0\% & 2 \\
 \hline
-\hyperref[run:9]{run} & 9&100.0\% & 3 \\
+\hyperref[testColMap:12]{testColMap} & 12&100.0\% & 2 \\
 \hline
-\hyperref[testColMap:11]{testColMap} & 11&100.0\% & 3 \\
+\hyperref[testCreateBoard:5]{testCreateBoard} & 5&100.0\% & 2 \\
 \hline
-\hyperref[testCreateBoard:4]{testCreateBoard} & 4&100.0\% & 3 \\
+\hyperref[testEmptyBeforePlacement:26]{testEmptyBeforePlacement} & 26&100.0\% & 2 \\
 \hline
-\hyperref[testEmptyBeforePlacement:25]{testEmptyBeforePlacement} & 25&100.0\% & 3 \\
+\hyperref[testGetShips:56]{testGetShips} & 56&100.0\% & 2 \\
 \hline
-\hyperref[testGetShips:39]{testGetShips} & 39&100.0\% & 3 \\
+\hyperref[testPrints:82]{testPrints} & 82&100.0\% & 2 \\
 \hline
-\hyperref[testPrints:64]{testPrints} & 64&100.0\% & 3 \\
-\hline
-\hyperref[testRegisterMove:46]{testRegisterMove} & 46&100.0\% & 3 \\
+\hyperref[testRegisterMove:64]{testRegisterMove} & 64&100.0\% & 2 \\
 \hline
 \hline
-TestBoard.vdmpp & & 100.0\% & 24 \\
+TestBoard.vdmpp & & 100.0\% & 14 \\
 \hline
 \end{longtable}
 

@@ -1,10 +1,10 @@
 \begin{vdmpp}[breaklines=true]
 class Player
 types
- public String = seq of char;
+ public string = seq of char;
 
 instance variables
- protected name: String := [];
+ protected name: string := [];
  protected wins: nat;
  protected losses: nat;
  protected ownBoard: [Board] := nil; --tabuleiro aonde coloca-se os proprios navios e regista-se as tentativas do inimigo
@@ -18,7 +18,7 @@ operations
 (*@
 \label{Player:17}
 @*)
- public Player: String ==> Player
+ public Player: string ==> Player
   Player(nameArg) == (
    name := nameArg;
    wins := 0;
@@ -29,13 +29,13 @@ operations
 (*@
 \label{getName:25}
 @*)
- pure public getName : () ==> String
+ pure public getName : () ==> string
   getName() == return name;
   
-(*@
-\label{addBoards:28}
-@*)
   -- reinicia jogo 
+(*@
+\label{addBoards:29}
+@*)
  public addBoards : () ==> ()
   addBoards() == (
    ownBoard := new Board();
@@ -43,60 +43,57 @@ operations
    myShips := ownBoard.getShips();
   )
   pre ownBoard = nil and enemyBoard = nil;
-(*@
-\label{shipPlacement:36}
-@*)
   
   -- coloca navio no tabuleiro se este ainda não tiver sido colocado
+(*@
+\label{shipPlacement:38}
+@*)
  public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> ()
   shipPlacement(ship, colCh, line, dir) == (
    ownBoard.placeShip(ship, colCh, line, dir);
    myShips := myShips \ {ship}
   )
-(*@
-\label{allShipsPlaced:43}
-@*)
   pre ship in set myShips;
  
  -- retorna verdadeiro se todos os navios estão colocados no tabuleiro
 (*@
-\label{startRounds:46}
+\label{allShipsPlaced:46}
 @*)
  public allShipsPlaced: () ==> bool
   allShipsPlaced() == return card myShips = 0;
  
  -- inicia parte do jogo com o objetivo de destruir o navio inimigo 
+(*@
+\label{startRounds:50}
+@*)
  public startRounds: () ==> ()
   startRounds () == (
-(*@
-\label{clearData:52}
-@*)
    myShips := ownBoard.getShips();
    enemiesShips := {};
   );
  
  -- limpa tabuleiro e registo dos navios
+(*@
+\label{clearData:57}
+@*)
  public clearData: () ==> ()
   clearData() == (
    ownBoard := nil;
-(*@
-\label{registerAttack:60}
-@*)
    enemyBoard := nil;
    myShips := {};
    enemiesShips := {};
   );
  
  -- regista tentativa de afundanço do adversário
+(*@
+\label{registerAttack:66}
+@*)
  public registerAttack: char * nat1 ==> Board`CellContent
   registerAttack(colCh, line) == (
    dcl shipHit : Board`CellContent := ownBoard.registerMove(colCh, line);
    if ownBoard.countCellType(shipHit) = 0 then (
     myShips := myShips \ {shipHit};
     if card myShips = 0 then losses := losses + 1;
-(*@
-\label{registerResult:72}
-@*)
     return shipHit;
    )
    else if shipHit <> <Empty> then return <Hit>
@@ -104,6 +101,9 @@ operations
   );
  
  -- regista a sua tentativa de afundar um navio adversário
+(*@
+\label{registerResult:79}
+@*)
  public registerResult: Board`CellContent * char * nat1 ==> bool
   registerResult(code,colCh, line) == (
   if code = <Miss> then enemyBoard.setComponentCol(<Miss>,line,colCh)
@@ -113,45 +113,39 @@ operations
     if card enemiesShips = enemyBoard.getShipsCount() then(
      wins := wins + 1;
      return true;
-(*@
-\label{printInfo:88}
-@*)
     );
    );
    return false;
  );
  
-(*@
-\label{printPlacementStatus:93}
-@*)
 --- print to console
  
  --disponibiliza informações do jogador
- public printInfo : () ==> String
-  printInfo() == return name ^ " (" ^ 
 (*@
-\label{printGameStatus:98}
+\label{printInfo:96}
 @*)
+ public printInfo : () ==> string
+  printInfo() == return name ^ " (" ^ 
    VDMUtil`val2seq_of_char[nat](wins) ^ "-" ^ 
    VDMUtil`val2seq_of_char[nat](losses) ^ ")\n";
  
  -- disponibiliza o estado da colocação dos navios
- public printPlacementStatus: () ==> String
+(*@
+\label{printPlacementStatus:102}
+@*)
+ public printPlacementStatus: () ==> string
   printPlacementStatus() == return "Fleet placement\nPlayer turn: " ^ name ^ "\n" ^
   "Ships to be placed: " ^ ownBoard.printRemainShips(myShips) ^ "\n\n" ^
   ownBoard.printBoard();
   
   --  disponibiliza o estado do jogo
- public printGameStatus : () ==> String
 (*@
-\label{printTakeDown:109}
+\label{printGameStatus:108}
 @*)
+ public printGameStatus : () ==> string
   printGameStatus() == (
-   dcl ret: String := "Player turn: " ^ name ^ "\nMy active ships: ";
+   dcl ret: string := "Player turn: " ^ name ^ "\nMy active ships: ";
    for all ship in set myShips do ret := ret ^ ownBoard.shipToString(ship) ^ "   ";
-(*@
-\label{printVictory:112}
-@*)
    ret := ret ^ "\nDestroyed enemies ships: ";
    for all ship in set enemiesShips do ret := ret ^ enemyBoard.shipToString(ship) ^ "   ";
    ret := ret ^ "\n\n                                 My ships \t\t\t\t\t\t\t\t\t                Enemy ships\n\n\n";
@@ -160,11 +154,17 @@ operations
   );
    
   -- mensagem de abater um navio
- public printTakeDown : Board`CellContent ==> String
+(*@
+\label{printTakeDown:120}
+@*)
+ public printTakeDown : Board`CellContent ==> string
   printTakeDown(shipDown) == return "\n\n" ^ enemyBoard.shipToString(shipDown) ^ " is sinking\n";
   
   -- mensagem de vitória
- public printVictory : () ==> String
+(*@
+\label{printVictory:124}
+@*)
+ public printVictory : () ==> string
   printVictory() == return "\nEnemy fleet destroyed. Victory!\n";
 
 end Player
@@ -175,36 +175,36 @@ end Player
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Player:17]{Player} & 17&100.0\% & 57 \\
+\hyperref[Player:17]{Player} & 17&100.0\% & 38 \\
 \hline
-\hyperref[addBoards:28]{addBoards} & 28&100.0\% & 24 \\
+\hyperref[addBoards:29]{addBoards} & 29&100.0\% & 16 \\
 \hline
-\hyperref[allShipsPlaced:43]{allShipsPlaced} & 43&100.0\% & 78 \\
+\hyperref[allShipsPlaced:46]{allShipsPlaced} & 46&100.0\% & 52 \\
 \hline
-\hyperref[clearData:52]{clearData} & 52&100.0\% & 5 \\
+\hyperref[clearData:57]{clearData} & 57&100.0\% & 6 \\
 \hline
-\hyperref[getName:25]{getName} & 25&100.0\% & 639 \\
+\hyperref[getName:25]{getName} & 25&100.0\% & 490 \\
 \hline
-\hyperref[printGameStatus:98]{printGameStatus} & 98&100.0\% & 57 \\
+\hyperref[printGameStatus:108]{printGameStatus} & 108&100.0\% & 40 \\
 \hline
-\hyperref[printInfo:88]{printInfo} & 88&100.0\% & 12 \\
+\hyperref[printInfo:96]{printInfo} & 96&100.0\% & 8 \\
 \hline
-\hyperref[printPlacementStatus:93]{printPlacementStatus} & 93&100.0\% & 72 \\
+\hyperref[printPlacementStatus:102]{printPlacementStatus} & 102&100.0\% & 48 \\
 \hline
-\hyperref[printTakeDown:109]{printTakeDown} & 109&100.0\% & 12 \\
+\hyperref[printTakeDown:120]{printTakeDown} & 120&100.0\% & 10 \\
 \hline
-\hyperref[printVictory:112]{printVictory} & 112&100.0\% & 1 \\
+\hyperref[printVictory:124]{printVictory} & 124&100.0\% & 2 \\
 \hline
-\hyperref[registerAttack:60]{registerAttack} & 60&100.0\% & 112 \\
+\hyperref[registerAttack:66]{registerAttack} & 66&100.0\% & 78 \\
 \hline
-\hyperref[registerResult:72]{registerResult} & 72&100.0\% & 76 \\
+\hyperref[registerResult:79]{registerResult} & 79&100.0\% & 54 \\
 \hline
-\hyperref[shipPlacement:36]{shipPlacement} & 36&100.0\% & 90 \\
+\hyperref[shipPlacement:38]{shipPlacement} & 38&100.0\% & 60 \\
 \hline
-\hyperref[startRounds:46]{startRounds} & 46&100.0\% & 12 \\
+\hyperref[startRounds:50]{startRounds} & 50&100.0\% & 8 \\
 \hline
 \hline
-Player.vdmpp & & 100.0\% & 1247 \\
+Player.vdmpp & & 100.0\% & 910 \\
 \hline
 \end{longtable}
 

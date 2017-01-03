@@ -2,23 +2,11 @@
 class TestGame is subclass of Game
 
 operations
-(*@
-\label{TestGame:4}
-@*)
  
-(*@
-\label{testCreateGame:5}
-@*)
-(*@
-\label{testCreatePlayer:5}
-@*)
-(*@
-\label{run:5}
-@*)
-(*@
-\label{testCreateBoard:5}
-@*)
  --testa a criação de um jogo
+(*@
+\label{testCreateGame:6}
+@*)
  private testCreateGame: () ==> ()
   testCreateGame() == (
   dcl g: Game := new Game("John","Diana");
@@ -34,16 +22,16 @@ operations
   TestBase`assertEqual(g.playerA.getName(),"Paul");
   TestBase`assertEqual(g.playerB.getName(),"John");
  );
-(*@
-\label{testEmplacement:21}
-@*)
  
  -- teste a colocação dos navios
+(*@
+\label{testEmplacement:23}
+@*)
  public testEmplacement: () ==> ()
   testEmplacement() == (
   
   dcl g: Game := new Game("Ana","Paula");
-  dcl str: Player`String := [];
+  dcl str: Player`string := [];
   str := g.startGame();
   str := g.shipPlacement(<Submarine>,'C',9,<Right>);
   TestBase`assertEqual(g.currState,<Start>);
@@ -64,16 +52,16 @@ operations
   str := g.shipPlacement(<Destroyer>,'C',4,<Down>);
   
   TestBase`assertEqual(g.currState,<Placed>);
-(*@
-\label{testShipGuess:48}
-@*)
  );
  
  --testa as consecutivas rondas de um jogo
+(*@
+\label{testShipGuess:51}
+@*)
  private testShipGuess: () ==> ()
   testShipGuess() == (
   dcl g: Game := new Game("Ana","Paula");
-  dcl str: Player`String := [];
+  dcl str: Player`string := [];
   str := g.startGame();
   str := g.shipPlacement(<Submarine>,'C',9,<Right>);
   str := g.shipPlacement(<Carrier>, 'H', 9, <Up>);
@@ -121,6 +109,9 @@ operations
   TestBase`assertEqual(g.currState,<Off>);
  );
  
+(*@
+\label{run:102}
+@*)
  public run: () ==> ()
   run() == (
    testCreateGame();
@@ -135,22 +126,16 @@ end TestGame
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[TestGame:4]{TestGame} & 4&0.0\% & 0 \\
+\hyperref[run:102]{run} & 102&100.0\% & 2 \\
 \hline
-\hyperref[run:5]{run} & 5&0.0\% & 0 \\
+\hyperref[testCreateGame:6]{testCreateGame} & 6&100.0\% & 2 \\
 \hline
-\hyperref[testCreateBoard:5]{testCreateBoard} & 5&0.0\% & 0 \\
+\hyperref[testEmplacement:23]{testEmplacement} & 23&100.0\% & 2 \\
 \hline
-\hyperref[testCreateGame:5]{testCreateGame} & 5&22.7\% & 0 \\
-\hline
-\hyperref[testCreatePlayer:5]{testCreatePlayer} & 5&19.2\% & 0 \\
-\hline
-\hyperref[testEmplacement:21]{testEmplacement} & 21&15.8\% & 0 \\
-\hline
-\hyperref[testShipGuess:48]{testShipGuess} & 48&48.2\% & 0 \\
+\hyperref[testShipGuess:51]{testShipGuess} & 51&100.0\% & 2 \\
 \hline
 \hline
-TestGame.vdmpp & & 35.1\% & 0 \\
+TestGame.vdmpp & & 100.0\% & 8 \\
 \hline
 \end{longtable}
 
