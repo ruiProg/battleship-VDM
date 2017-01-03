@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.30)  2 JAN 2017 20:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.30)  3 JAN 2017 00:32
 entering extended mode
 **./Battleship.tex
 (Battleship.tex
@@ -333,8 +333,17 @@ Missing character: There is no á in font pcrro7t!
 Underfull \vbox (badness 10000) detected at line 269
  []
 
-[4]) (specification/Game.vdmpp.tex [5] [6]
-Underfull \vbox (badness 10000) detected at line 183
+[4]) (specification/Game.vdmpp.tex
+Missing character: There is no ã in font pcrro7t!
+Missing character: There is no ã in font pcrro7t!
+ [5]
+Missing character: There is no á in font pcrro7t!
+ [6]
+Missing character: There is no ç in font pcrro7t!
+Missing character: There is no ã in font pcrro7t!
+Missing character: There is no á in font pcrro7t!
+
+Underfull \vbox (badness 10000) detected at line 190
  []
 
 ) (specification/Player.vdmpp.tex [7]
@@ -344,19 +353,20 @@ Missing character: There is no ç in font pcrro7t!
 Missing character: There is no á in font pcrro7t!
  [8]
 Missing character: There is no á in font pcrro7t!
-
-Underfull \vbox (badness 10000) detected at line 204
+Missing character: There is no ç in font pcrro7t!
+Missing character: There is no õ in font pcrro7t!
+Missing character: There is no ç in font pcrro7t!
+Missing character: There is no ã in font pcrro7t!
+Missing character: There is no ó in font pcrro7t!
+ [9]
+Underfull \vbox (badness 10000) detected at line 209
  []
 
-[9]) (specification/TestBase.vdmpp.tex
+) (specification/TestBase.vdmpp.tex [10]
 Underfull \vbox (badness 10000) detected at line 54
  []
 
-
-Overfull \vbox (6.32205pt too high) has occurred while \output is active []
-
-
-[10]) (specification/TestBoard.vdmpp.tex
+) (specification/TestBoard.vdmpp.tex
 Missing character: There is no é in font pcrro7t!
 Missing character: There is no ã in font pcrro7t!
 Missing character: There is no í in font pcrro7t!
@@ -365,17 +375,22 @@ Missing character: There is no é in font pcrro7t!
 Underfull \vbox (badness 10000) detected at line 149
  []
 
-) (specification/TestGame.vdmpp.tex [12]
-Underfull \vbox (badness 10000) detected at line 31
+[12]) (specification/TestGame.vdmpp.tex
+Missing character: There is no ç in font pcrro7t!
+Missing character: There is no ã in font pcrro7t!
+Missing character: There is no ç in font pcrro7t!
+Missing character: There is no ã in font pcrro7t!
+ [13] [14]
+Underfull \vbox (badness 10000) detected at line 155
  []
 
-) (specification/TestPlayer.vdmpp.tex [13] [14]
-Underfull \vbox (badness 10000) detected at line 161
+) (specification/TestPlayer.vdmpp.tex [15] [16]
+Underfull \vbox (badness 10000) detected at line 166
  []
 
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 27.
- [15]
+ [17]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 27.
  (Battleship.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 27.
@@ -389,10 +404,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 27.
  ) 
 Here is how much of TeX's memory you used:
- 7408 strings out of 493333
- 108887 string characters out of 3139190
- 482015 words of memory out of 3000000
- 10104 multiletter control sequences out of 15000+200000
+ 7538 strings out of 493333
+ 110858 string characters out of 3139190
+ 482243 words of memory out of 3000000
+ 10115 multiletter control sequences out of 15000+200000
  17044 words of font info for 41 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  33i,6n,48p,279b,1932s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -402,9 +417,9 @@ KTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
 type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/couri
 er/ucrro8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C
 :/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on Battleship.pdf (15 pages, 225047 bytes).
+Output written on Battleship.pdf (17 pages, 246078 bytes).
 PDF statistics:
- 1091 PDF objects out of 1200 (max. 8388607)
- 769 named destinations out of 1000 (max. 500000)
+ 1245 PDF objects out of 1440 (max. 8388607)
+ 888 named destinations out of 1000 (max. 500000)
  57 words of extra memory for PDF output out of 10000 (max. 10000000)
 

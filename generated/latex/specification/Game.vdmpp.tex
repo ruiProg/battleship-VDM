@@ -1,15 +1,14 @@
 \begin{vdmpp}[breaklines=true]
 class Game
 types
- private State = <Off> | <Start> | <Placed> | <Round>
+ protected State = <Off> | <Start> | <Placed> | <Round>
 
 instance variables
- private inGame: bool := false;
- private playerA: Player;
- private playerB: Player;
- private currPlayer: Player;
- private players: set of Player := {};
- private currState: State := <Off>;
+ protected playerA: Player := new Player("Default_1");
+ protected playerB: Player := new Player("Default_2");
+ protected currPlayer: Player := playerA;
+ protected players: set of Player := {playerA, playerB};
+ protected currState: State := <Off>;
  
  inv currPlayer in set {playerA, playerB};
  inv playerA in set players;
@@ -18,6 +17,7 @@ instance variables
  
 operations
   
+  -- cria jogo
 (*@
 \label{Game:20}
 @*)
@@ -29,12 +29,13 @@ operations
    players := {playerA, playerB};
    return self
   )
-  pre currState= <Off> and name1 <> name2 and card players = 0
+  pre currState= <Off> and name1 <> name2
   post card players = 2;
    
 (*@
 \label{createPlayer:31}
 @*)
+  -- cria novo jogador com determinado nome se nome ainda não estiver registado
  public createPlayer: (Player`String) ==> Player
   createPlayer(name) == (
    dcl player: Player := new Player(name);
@@ -42,10 +43,11 @@ operations
    return player 
   )
   pre not exists p in set players & p.getName() = name;
-    
 (*@
 \label{changePlayers:39}
 @*)
+  
+  --muda os jogadores que vão realizar jogo 
  public changePlayers: Player`String * Player`String ==> ()
   changePlayers(name1, name2) == (
    dcl tmpPlayer: Player := iota p in set players & p.getName() = name1;
@@ -54,46 +56,49 @@ operations
    currPlayer := tmpPlayer;
    );
   )
-  pre currState = <Off> and exists p1, p2 in set players & p1.getName() = name1 and p2.getName() = name2;
-   
 (*@
 \label{switchTurns:49}
 @*)
+  pre currState = <Off> and exists p1, p2 in set players & p1.getName() = name1 and p2.getName() = name2;
+   
+  -- muda o turno para jogar em cada ronda
  public switchTurns: () ==> ()
   switchTurns() == (
    if currPlayer = playerA then currPlayer := playerB
    else currPlayer := playerA
-  )
-  pre currState <> <Off>;
-  
 (*@
 \label{getOtherPlayer:56}
 @*)
+  )
+  pre currState <> <Off>;
+  
+  -- retorna o jogador que aguarda o ataque do adversário
  public getOtherPlayer: () ==> Player
   getOtherPlayer() == (
+(*@
+\label{startGame:62}
+@*)
    if currPlayer = playerA then return playerB
    else return playerA;
   );
    
-(*@
-\label{startGame:62}
-@*)
+   -- inicia jogo
  public startGame: () ==> Player`String
   startGame() == (
-   inGame := true;
    playerA.addBoards();
    playerB.addBoards();
    currState := <Start>;
    return "Game started with following players:\n"
    ^ playerA.printInfo()
    ^ playerB.printInfo() ^ "\n\n\n\n"
+(*@
+\label{shipPlacement:75}
+@*)
    ^ currPlayer.printPlacementStatus(); 
   )
   pre currState = <Off>;
   
-(*@
-\label{shipPlacement:75}
-@*)
+  -- jogador ativo colca os navios no tabuleiro
  public shipPlacement: Board`CellContent * char * nat1 * Board`Direction ==> Player`String
   shipPlacement(ship, colCh, line, dir) == (
    dcl ret: Player`String;
@@ -107,26 +112,28 @@ operations
      ret := ret ^ "All ships placed\n";
     )
    else ret := ret ^ currPlayer.printPlacementStatus();
+(*@
+\label{startRounds:93}
+@*)
    );
    return ret;
   )
   pre currState = <Start>;
   
-(*@
-\label{startRounds:93}
-@*)
+  -- inicia rondas no jogo
  public startRounds: () ==> Player`String
   startRounds() == (
    playerA.startRounds();
+(*@
+\label{guessShipPosition:102}
+@*)
    playerB.startRounds();
    currState := <Round>;
    return currPlayer.printGameStatus();
   )
   pre currState = <Placed>;
   
-(*@
-\label{guessShipPosition:102}
-@*)
+  -- jogador activo tenta adivinhar posição de um navio adversário
  public guessShipPosition: char * nat1 ==> Player`String
   guessShipPosition(colCh, line) == (
    dcl othPlayer: Player := getOtherPlayer();
@@ -159,26 +166,26 @@ end Game
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Game:20]{Game} & 20&0.0\% & 0 \\
+\hyperref[Game:20]{Game} & 20&100.0\% & 9 \\
 \hline
-\hyperref[changePlayers:39]{changePlayers} & 39&0.0\% & 0 \\
+\hyperref[changePlayers:39]{changePlayers} & 39&100.0\% & 3 \\
 \hline
-\hyperref[createPlayer:31]{createPlayer} & 31&0.0\% & 0 \\
+\hyperref[createPlayer:31]{createPlayer} & 31&100.0\% & 3 \\
 \hline
-\hyperref[getOtherPlayer:56]{getOtherPlayer} & 56&0.0\% & 0 \\
+\hyperref[getOtherPlayer:56]{getOtherPlayer} & 56&100.0\% & 55 \\
 \hline
-\hyperref[guessShipPosition:102]{guessShipPosition} & 102&0.0\% & 0 \\
+\hyperref[guessShipPosition:102]{guessShipPosition} & 102&100.0\% & 55 \\
 \hline
-\hyperref[shipPlacement:75]{shipPlacement} & 75&0.0\% & 0 \\
+\hyperref[shipPlacement:75]{shipPlacement} & 75&100.0\% & 60 \\
 \hline
-\hyperref[startGame:62]{startGame} & 62&0.0\% & 0 \\
+\hyperref[startGame:62]{startGame} & 62&100.0\% & 6 \\
 \hline
-\hyperref[startRounds:93]{startRounds} & 93&0.0\% & 0 \\
+\hyperref[startRounds:93]{startRounds} & 93&100.0\% & 3 \\
 \hline
-\hyperref[switchTurns:49]{switchTurns} & 49&0.0\% & 0 \\
+\hyperref[switchTurns:49]{switchTurns} & 49&100.0\% & 23 \\
 \hline
 \hline
-Game.vdmpp & & 0.0\% & 0 \\
+Game.vdmpp & & 100.0\% & 217 \\
 \hline
 \end{longtable}
 

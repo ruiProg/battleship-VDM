@@ -2,7 +2,6 @@ class TestGame is subclass of Game
 
 operations
 	
-	--testa a criação de um jogo
 	private testCreateGame: () ==> ()
 		testCreateGame() == (
 		dcl g: Game := new Game("John","Diana");
@@ -19,7 +18,6 @@ operations
 		TestBase`assertEqual(g.playerB.getName(),"John");
 	);
 	
-	-- teste a colocação dos navios
 	public testEmplacement: () ==> ()
 		testEmplacement() == (
 		
@@ -47,7 +45,6 @@ operations
 		TestBase`assertEqual(g.currState,<Placed>);
 	);
 	
-	--testa as consecutivas rondas de um jogo
 	private testShipGuess: () ==> ()
 		testShipGuess() == (
 		dcl g: Game := new Game("Ana","Paula");
@@ -79,7 +76,7 @@ operations
 		
 		str := g.guessShipPosition('C',9);
 		str := g.guessShipPosition('D',9);
-		str := g.guessShipPosition('E',9);
+		str := g.guessShipPosition('E',4);
 		
 		str := g.guessShipPosition('A',2);
 		str := g.guessShipPosition('A',3);
@@ -89,14 +86,6 @@ operations
 		str := g.guessShipPosition('G',2);
 		str := g.guessShipPosition('H',2);
 		str := g.guessShipPosition('I',2);
-		
-		str := g.guessShipPosition('H',9);
-		str := g.guessShipPosition('H',8);
-		str := g.guessShipPosition('H',7);
-		str := g.guessShipPosition('H',6);
-		str := g.guessShipPosition('H',5);
-		
-		TestBase`assertEqual(g.currState,<Off>);
 	);
 	
 	public run: () ==> ()

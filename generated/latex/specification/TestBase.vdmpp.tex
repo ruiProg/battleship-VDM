@@ -27,10 +27,10 @@ operations
   runAllTests() == (
     dcl tb: TestBoard := new TestBoard();
     dcl tp: TestPlayer := new TestPlayer();
-    --dcl tg: TestGame := new TestGame();
+    dcl tg: TestGame := new TestGame();
     tb.run();
     tp.run();
-    --tg.run();
+    tg.run();
     );
 end TestBase
 \end{vdmpp}
@@ -40,16 +40,16 @@ end TestBase
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[AssertTrue:4]{AssertTrue} & 4&100.0\% & 53 \\
+\hyperref[AssertTrue:4]{AssertTrue} & 4&100.0\% & 54 \\
 \hline
-\hyperref[assertEqual:9]{assertEqual} & 9&100.0\% & 92 \\
+\hyperref[assertEqual:9]{assertEqual} & 9&100.0\% & 137 \\
 \hline
-\hyperref[assertTrue:5]{assertTrue} & 5&100.0\% & 53 \\
+\hyperref[assertTrue:5]{assertTrue} & 5&100.0\% & 54 \\
 \hline
 \hyperref[runAllTests:9]{runAllTests} & 9&100.0\% & 3 \\
 \hline
 \hline
-TestBase.vdmpp & & 100.0\% & 201 \\
+TestBase.vdmpp & & 100.0\% & 248 \\
 \hline
 \end{longtable}
 

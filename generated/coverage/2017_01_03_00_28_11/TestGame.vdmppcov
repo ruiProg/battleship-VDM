@@ -2,7 +2,6 @@ class TestGame is subclass of Game
 
 operations
 	
-	--testa a criação de um jogo
 	private testCreateGame: () ==> ()
 		testCreateGame() == (
 		dcl g: Game := new Game("John","Diana");
@@ -19,7 +18,6 @@ operations
 		TestBase`assertEqual(g.playerB.getName(),"John");
 	);
 	
-	-- teste a colocação dos navios
 	public testEmplacement: () ==> ()
 		testEmplacement() == (
 		
@@ -47,7 +45,6 @@ operations
 		TestBase`assertEqual(g.currState,<Placed>);
 	);
 	
-	--testa as consecutivas rondas de um jogo
 	private testShipGuess: () ==> ()
 		testShipGuess() == (
 		dcl g: Game := new Game("Ana","Paula");

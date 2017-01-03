@@ -1,9 +1,0 @@
-class TestGame is subclass of Game
-operations
-	
-	
-	public run: () ==> ()
-		run() == (
-			return;
-	);
-end TestGame
