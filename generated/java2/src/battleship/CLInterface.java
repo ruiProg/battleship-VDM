@@ -1,6 +1,9 @@
 package battleship;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import jp.vdmtools.VDM.CGException;
@@ -8,15 +11,30 @@ import jp.vdmtools.VDM.CGException;
 public class CLInterface {
 
 	public static void main(String[] args) {
-		new CLInterface().run();
+		CLInterface cli = new CLInterface();
+		cli.run();
 	}
 	
 	private ArrayList<Menu> menus;
 	private Game game = null;
 	private Scanner input;
-	
+	private HashMap<String,Object> ships;
+	private HashMap<String,Object> dirs;
 
 	public CLInterface(){
+		ships = new HashMap<String,Object> ();
+		ships.put("carrier",new quotes.Carrier());
+		ships.put("battleship", new quotes.Battleship());
+		ships.put("cruiser", new quotes.Cruiser());
+		ships.put("submarine", new quotes.Submarine());
+		ships.put("destroyer",new quotes.Destroyer());
+		
+		dirs = new HashMap<String,Object>();
+		dirs.put("left", new quotes.Left());
+		dirs.put("right", new quotes.Right());
+		dirs.put("up", new quotes.Up());
+		dirs.put("down", new quotes.Down());
+		
 		menus = new ArrayList<Menu>();
 		menus.add(new NewGame());
 		menus.add(new CreatePlayer());
@@ -51,6 +69,44 @@ public class CLInterface {
 		return input.nextLine();
 	}
 	
+	private Object strToShip(String ship) throws Exception{
+		
+		Iterator<Entry<String, Object>> it = ships.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String, Object> pair = (Entry<String,Object>)it.next();
+			String othShip = pair.getKey();
+			if(ship.equalsIgnoreCase(othShip.substring(0, Math.min(ship.length(), othShip.length()))))
+				return pair.getValue();
+		}
+		throw new Exception("ship not found");
+	}
+	
+	private Character strToCol(String col) throws Exception{
+		if (col.length() != 1) throw new Exception("col not valid");
+		if (col.compareToIgnoreCase("A") >= 0 && col.compareToIgnoreCase("J") <= 0)
+			return col.toUpperCase().charAt(0);
+		throw new Exception("character invalid");
+	}
+	
+	private Number strToLine(String line) throws Exception{
+		Integer lineInt = Integer.parseInt(line);
+		if (lineInt >= 1 && lineInt <= 10)
+			return lineInt;
+		throw new Exception("line invalid");
+	}
+	
+	private Object strToDir(String dir) throws Exception{
+		
+		Iterator<Entry<String, Object>> it = dirs.entrySet().iterator();
+		while(it.hasNext()){
+			Entry<String, Object> pair = (Entry<String,Object>)it.next();
+			String othDir = pair.getKey();
+			if(dir.equalsIgnoreCase(othDir.substring(0, Math.min(dir.length(), othDir.length()))))
+				return pair.getValue();
+		}
+		throw new Exception("direction not found");
+	}
+	
 	private abstract class Menu {
 		protected String name;
 		abstract boolean invoke();
@@ -74,6 +130,29 @@ public class CLInterface {
 			}
 			catch (CGException e) {
 				System.out.println("Couldn't not create game:\n"+e.getMessage());
+			}
+		}
+		
+		void placeShips(){
+			String out = "";
+			String ship = "";
+			String col = "";
+			String line = "";
+			String dir = "";
+			while(!out.contains("All ships placed")){
+				try{
+					ship = get("Place a ship (Carrier, Battleship, Cruiser, Submarine, Destroyer) providing at least three letters: ");
+					col = get("Set column index ('A'-'J'):");
+					line = get("Set line index (1-10):");
+					dir = get("Set direction and oriention of ship (left,right,up,down) providing at least one letter:");
+					
+					out = game.shipPlacement(strToShip(ship), strToCol(col), strToLine(line), strToDir(dir));
+					System.out.println("\n\n\n\n\n\n\n\n"+ out + "\n\n");
+				}
+				catch (Exception e){
+					System.out.println("\nInvalid input");
+					System.out.println("\n"+ out + "\n\n");
+				}
 			}
 		}
 		
