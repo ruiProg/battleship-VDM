@@ -65,7 +65,7 @@ public class CLInterface {
 	}
 	
 	private String get(String message){
-		System.out.println(message);
+		System.out.print(message);
 		return input.nextLine();
 	}
 	
@@ -129,29 +129,46 @@ public class CLInterface {
 				System.out.println("\n\n"+game.startGame());
 			}
 			catch (CGException e) {
-				System.out.println("Couldn't not create game:\n"+e.getMessage());
+				System.out.println("\n\nCouldn't not create game:\n"+e.getMessage());
 			}
 		}
 		
 		void placeShips(){
 			String out = "";
-			String ship = "";
-			String col = "";
-			String line = "";
-			String dir = "";
+			Object ship = null;
+			Character col = null;
+			Number line = null;
+			Object dir = null;
 			while(!out.contains("All ships placed")){
 				try{
-					ship = get("Place a ship (Carrier, Battleship, Cruiser, Submarine, Destroyer) providing at least three letters: ");
-					col = get("Set column index ('A'-'J'):");
-					line = get("Set line index (1-10):");
-					dir = get("Set direction and oriention of ship (left,right,up,down) providing at least one letter:");
+					ship = strToShip(get("Place a ship (Carrier, Battleship, Cruiser, Submarine, Destroyer) providing at least three letters: "));
+					col = strToCol(get("Set column index ('A'-'J'): "));
+					line = strToLine(get("Set line index (1-10): "));
+					dir = strToDir(get("Set direction and oriention of ship (left,right,up,down) providing at least one letter: "));
 					
-					out = game.shipPlacement(strToShip(ship), strToCol(col), strToLine(line), strToDir(dir));
+					out = game.shipPlacement(ship, col, line, dir);
 					System.out.println("\n\n\n\n\n\n\n\n"+ out + "\n\n");
 				}
 				catch (Exception e){
 					System.out.println("\nInvalid input");
-					System.out.println("\n"+ out + "\n\n");
+				}
+			}
+		}
+		
+		void guessShip(){
+			String out = "";
+			String col = "";
+			String line = "";
+			while(!out.contains("Victory")){
+				try{
+					col = get("Set column index ('A'-'J'): ");
+					line = get("Set line index (1-10): ");
+					
+					out = game.guessShipPosition(strToCol(col), strToLine(line));
+					System.out.println("\n\n\n\n\n\n\n\n"+ out + "\n\n");
+				}
+				catch (Exception e){
+					System.out.println("\nInvalid input");
 				}
 			}
 		}
@@ -161,6 +178,8 @@ public class CLInterface {
 				selectPlayers();
 				startGame();
 				placeShips();
+				System.out.println(game.startRounds());
+				guessShip();
 			}
 			catch (CGException e) {
 				System.out.println("Couldn't not create game:\n"+e.getMessage());
