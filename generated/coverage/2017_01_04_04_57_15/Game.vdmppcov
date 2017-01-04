@@ -36,13 +36,28 @@ operations
 			return player 
 		)
 		pre not exists p in set players & p.getName() = name;
+	
+	-- função utilizada apenas para a criação de código em JAVA (iota não funciona)
+	public getPlayer: (Player`string) ==> Player
+		getPlayer(name) == (
+		dcl tmpPlayer: Player := playerA;
+		for all x in set players do
+			if x.getName() = name then (
+				tmpPlayer := x;
+				return x;
+			);
+			return tmpPlayer;
+		)
+	pre exists p in set players & p.getName() = name;
 		
 		--muda os jogadores que vão realizar jogo	
 	public changePlayers: Player`string * Player`string ==> ()
 		changePlayers(name1, name2) == (
 			dcl tmpPlayer: Player := iota p in set players & p.getName() = name1;
+			--dcl tmpPlayer: Player := getPlayer(name1);  substituir esta linha pela de cima aquando da geração de código em JAVA
 			atomic(playerA := tmpPlayer;
 			playerB := iota p in set players & p.getName() = name2;
+			--playerB := getPlayer(name2); idem case
 			currPlayer := tmpPlayer;
 			);
 		)
